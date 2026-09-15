@@ -8,20 +8,15 @@
   :root{
     --sys-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --mono-font: 'SF Mono', Menlo, Consolas, 'Courier New', monospace;
-    --ink:#1d1d1f;
-    --sub:#6e6e73;
-    --paper:#ffffff;
-    --line:#e6e6e6;
-    --bar-top:#ffffff;
-    --bar-bot:#f6f6f6;
+    --ink:#1d1d1f; --sub:#6e6e73; --paper:#ffffff; --line:#e6e6e6;
+    --bar-top:#ffffff; --bar-bot:#f6f6f6;
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
   html,body{
     margin:0; padding:0; height:100%; overflow:hidden;
-    font-family:var(--sys-font);
-    user-select:none;
-    color:var(--ink);
+    font-family:var(--sys-font); user-select:none; color:var(--ink);
   }
+  /* Aesthetic Desktop Wallpaper */
   body{
     height:100vh; position:relative;
     background:
@@ -35,7 +30,7 @@
   /* ===================== BOOT / LOADING SCREEN ===================== */
   #boot{
     position:fixed; inset:0; z-index:99999;
-    background: radial-gradient(circle at 50% 35%, #241848 0%, #0c0a1c 70%);
+    background: radial-gradient(circle at 50% 35%, #140d2b 0%, #05040a 70%);
     display:flex; flex-direction:column; align-items:center; justify-content:center;
     gap:14px; transition:opacity .6s ease, visibility .6s ease;
   }
@@ -47,312 +42,256 @@
     animation:boot-pulse 1.6s ease-in-out infinite;
   }
   @keyframes boot-pulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.08); } }
-  .boot-title{
-    color:#fff; font-size:22px; font-weight:700; letter-spacing:0.14em; margin-top:6px;
-  }
+  .boot-title{ color:#fff; font-size:22px; font-weight:700; letter-spacing:0.14em; margin-top:6px; }
   .boot-sub{
-    color:#b9b3d9; font-size:13px; font-weight:500; letter-spacing:0.01em; text-align:center; padding:0 20px;
+    color:#00ffcc; font-size:14px; font-weight:600; font-family:var(--mono-font); letter-spacing:0.01em; text-align:center; padding:0 20px;
+    animation: blink-text 1.5s infinite;
   }
-  .boot-bar{
-    width:220px; height:5px; border-radius:4px; background:rgba(255,255,255,0.12); overflow:hidden; margin-top:6px;
-  }
+  @keyframes blink-text { 0%, 100% {opacity: 1;} 50% {opacity: 0.5;} }
+  .boot-bar{ width:220px; height:5px; border-radius:4px; background:rgba(255,255,255,0.12); overflow:hidden; margin-top:6px; }
   .boot-bar-fill{
     height:100%; width:0%; border-radius:4px;
-    background:linear-gradient(90deg,#9b8cff,#5b6df0,#6de0ff);
+    background:linear-gradient(90deg,#9b8cff,#5b6df0,#00ffcc);
     animation:boot-fill 5s linear forwards;
   }
   @keyframes boot-fill{ from{ width:0%; } to{ width:100%; } }
 
-  /* ===================== Menu bar ===================== */
+  /* ===================== Top Menu bar ===================== */
   #menubar{
-    position:fixed; top:0; left:0; right:0; height:26px;
-    background:rgba(255,255,255,0.55); backdrop-filter:blur(20px) saturate(1.8);
-    -webkit-backdrop-filter:blur(20px) saturate(1.8);
-    border-bottom:1px solid rgba(0,0,0,0.08);
+    position:fixed; top:0; left:0; right:0; height:28px;
+    background:rgba(255,255,255,0.45); backdrop-filter:blur(25px) saturate(2);
+    -webkit-backdrop-filter:blur(25px) saturate(2);
+    border-bottom:1px solid rgba(255,255,255,0.2); box-shadow: 0 1px 10px rgba(0,0,0,0.05);
     display:flex; align-items:center; z-index:5000;
-    padding:0 12px; font-size:13px; gap:16px; font-weight:500;
+    padding:0 16px; font-size:13px; gap:16px; font-weight:500;
   }
   #menubar .mark{
-    width:15px; height:15px; border-radius:4px; flex-shrink:0;
-    background: linear-gradient(135deg,#9b8cff,#5b6df0);
+    width:16px; height:16px; border-radius:4px; flex-shrink:0;
+    background: linear-gradient(135deg,#9b8cff,#5b6df0); box-shadow: 0 0 8px rgba(155,140,255,0.6);
   }
-  #activeAppName{ font-weight:700; font-size:13px; margin-right:2px; }
-  .menu-item{ position:relative; padding:3px 7px; cursor:default; border-radius:4px; color:var(--ink); }
+  #activeAppName{ font-weight:700; font-size:13px; margin-right:2px; letter-spacing: 0.02em; }
+  .menu-item{ position:relative; padding:4px 8px; cursor:default; border-radius:6px; color:var(--ink); transition: background 0.1s; }
   .menu-item:hover, .menu-item.open{ background:rgba(0,0,0,0.08); }
   .menu-dropdown{
     display:none; position:absolute; top:100%; left:0; margin-top:6px;
-    background:rgba(250,250,250,0.9); backdrop-filter:blur(18px);
-    border:1px solid rgba(0,0,0,0.08); border-radius:8px;
-    box-shadow:0 10px 24px rgba(0,0,0,0.22);
-    min-width:190px; z-index:6000; padding:4px;
+    background:rgba(250,250,250,0.85); backdrop-filter:blur(25px) saturate(2);
+    border:1px solid rgba(255,255,255,0.4); border-radius:10px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.15); min-width:190px; z-index:6000; padding:6px;
   }
   .menu-item.open .menu-dropdown{ display:block; }
-  .menu-dropdown div{ padding:6px 10px; font-size:12.5px; color:var(--ink); white-space:nowrap; border-radius:5px; font-weight:400;}
-  .menu-dropdown div:hover{ background:#3b82f6; color:#fff; }
-  .menu-dropdown hr{ border:none; border-top:1px solid rgba(0,0,0,0.08); margin:4px 2px;}
-  #clock{ margin-left:auto; font-size:12.5px; padding:3px 4px; font-weight:500; }
+  .menu-dropdown div{ padding:6px 12px; font-size:13px; color:var(--ink); white-space:nowrap; border-radius:6px; font-weight:500;}
+  .menu-dropdown div:hover{ background:#5b6df0; color:#fff; }
+  #clock{ margin-left:auto; font-size:13px; padding:4px 6px; font-weight:600; letter-spacing: 0.03em;}
 
-  /* ===================== Windows ===================== */
+  /* ===================== Aesthetic Windows ===================== */
   .window{
-    position:absolute; background:var(--paper); border:1px solid rgba(0,0,0,0.12);
-    border-radius:12px; overflow:hidden;
-    box-shadow:0 20px 50px rgba(0,0,0,0.35), 0 2px 0 rgba(255,255,255,0.4) inset;
-    min-width:280px; display:flex; flex-direction:column;
-    z-index:100;
-    animation: pop-in .16s ease-out;
+    position:absolute; background:rgba(255,255,255,0.95); border:1px solid rgba(255,255,255,0.3);
+    border-radius:16px; overflow:hidden;
+    box-shadow:0 25px 60px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.7);
+    min-width:320px; display:flex; flex-direction:column; z-index:100;
+    backdrop-filter: blur(20px);
+    animation: pop-in .2s cubic-bezier(0.25, 1, 0.5, 1);
   }
-  @keyframes pop-in{ from{ transform:scale(0.95); opacity:0;} to{ transform:scale(1); opacity:1;} }
+  @keyframes pop-in{ from{ transform:scale(0.9); opacity:0;} to{ transform:scale(1); opacity:1;} }
 
   .titlebar{
-    height:38px; display:flex; align-items:center;
-    padding:0 14px; gap:8px; cursor:grab; position:relative;
-    background:linear-gradient(var(--bar-top), var(--bar-bot));
-    border-bottom:1px solid var(--line);
-    flex-shrink:0;
+    height:44px; display:flex; align-items:center; padding:0 16px; gap:10px; cursor:grab; position:relative;
+    background:rgba(255,255,255,0.6); border-bottom:1px solid rgba(0,0,0,0.05); flex-shrink:0; backdrop-filter:blur(10px);
   }
   .titlebar:active{ cursor:grabbing; }
   .traffic{ display:flex; gap:8px; flex-shrink:0; z-index:2; }
   .traffic span{
     width:13px; height:13px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-    border:1px solid rgba(0,0,0,0.10); cursor:pointer; font-size:9px; color:transparent; line-height:1;
-    font-family:var(--sys-font); font-weight:700;
+    cursor:pointer; font-size:9px; color:transparent; line-height:1; font-weight:700; transition: all 0.15s ease;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
   }
-  .titlebar:hover .traffic span{ color:rgba(0,0,0,0.45); }
-  .tf-close{ background:#ff5f57; }
-  .tf-min{ background:#febc2e; }
-  .tf-zoom{ background:#28c840; }
+  .titlebar:hover .traffic span{ color:rgba(0,0,0,0.5); }
+  .tf-close{ background:#ff5f57; } .tf-min{ background:#febc2e; } .tf-zoom{ background:#28c840; }
+  .tf-close:hover{ filter:brightness(0.9); } .tf-min:hover{ filter:brightness(0.9); } .tf-zoom:hover{ filter:brightness(0.9); }
+  
   .titletext{
-    font-size:13px; font-weight:600; color:var(--ink);
-    flex:1; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    position:absolute; left:0; right:0; pointer-events:none;
+    font-size:13.5px; font-weight:600; color:#333; flex:1; text-align:center; 
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; position:absolute; left:0; right:0; pointer-events:none;
   }
 
   .toolbar{
-    height:38px; background:#fafafa; border-bottom:1px solid var(--line);
-    display:flex; align-items:center; gap:8px; padding:0 12px; flex-shrink:0; font-size:12.5px; color:var(--sub);
+    height:36px; background:rgba(250,250,250,0.7); border-bottom:1px solid rgba(0,0,0,0.05);
+    display:flex; align-items:center; gap:8px; padding:0 16px; flex-shrink:0; font-size:12px; color:var(--sub); font-weight:500;
   }
-  .toolbar .crumb{ font-size:12.5px; color:var(--sub); font-weight:500; }
 
   .winbody{
-    padding:20px 24px; overflow:auto; font-size:14px; line-height:1.6; color:var(--ink); flex:1;
-    background:#fff; position:relative;
+    padding:24px; overflow:auto; font-size:14px; line-height:1.6; color:var(--ink); flex:1;
+    position:relative; max-height: 550px;
   }
-  .winbody h2{ font-size:20px; font-weight:700; margin:0 0 14px 0; letter-spacing:-0.01em; }
-  .winbody p{ margin:0 0 10px 0; color:#333; }
-  .proj{
-    border:1px solid var(--line); padding:14px 16px; margin-bottom:12px; background:#fbfbfb; border-radius:10px;
-    transition:box-shadow .15s ease, border-color .15s ease; position:relative; z-index:1;
-  }
-  .proj:hover{ box-shadow:0 4px 14px rgba(0,0,0,0.08); border-color:#dcdce0; }
-  .proj h3{ font-size:14px; font-weight:600; margin:0 0 6px 0; }
-  .proj p{ margin:0 0 8px 0; font-size:13px; color:var(--sub); }
-  .proj a, .winbody a{ color:#0a66c2; text-decoration:none; font-weight:500; }
-  .proj a:hover, .winbody a:hover{ text-decoration:underline; }
-  .tag{
-    display:inline-block; font-size:11px; font-weight:600; color:#3a3a3c;
-    border:none; padding:3px 9px; margin:0 5px 5px 0; background:#eef0f3; border-radius:20px;
-  }
-  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  .swatch{ height:76px; border-radius:10px; }
+  
   .resize{
-    position:absolute; width:18px; height:18px; right:0; bottom:0; cursor:nwse-resize;
-    background: repeating-linear-gradient(135deg, rgba(0,0,0,0.35) 0 1.5px, transparent 1.5px 4px);
-    opacity:0.55; z-index:5;
+    position:absolute; width:18px; height:18px; right:4px; bottom:4px; cursor:nwse-resize;
+    background: radial-gradient(circle, rgba(0,0,0,0.2) 1px, transparent 1px) 0 0 / 4px 4px;
+    opacity:0.3; z-index:5; transition: opacity 0.2s;
   }
-  .resize:hover{ opacity:0.9; }
+  .resize:hover{ opacity:0.8; }
 
-  /* ===================== THEME: Codes (programmer look) ===================== */
-  .theme-codes .titlebar{ background:#323233; border-color:#1e1e1e; }
-  .theme-codes .titletext{ color:#ccc; }
-  .theme-codes .toolbar{ background:#2d2d30; color:#9da5b4; border-color:#1e1e1e; }
-  .theme-codes .toolbar .crumb{ color:#9da5b4; font-family:var(--mono-font); }
-  .theme-codes .winbody{ background:#1e1e1e; color:#d4d4d4; font-family:var(--mono-font); }
-  .theme-codes .winbody h2{ color:#6a9955; font-family:var(--mono-font); }
-  .theme-codes .winbody h2::before{ content:'// '; }
-  .theme-codes .winbody h2::after{ content:'_'; animation:blink 1s step-end infinite; color:#6a9955; }
-  @keyframes blink{ 50%{ opacity:0; } }
-  .theme-codes .winbody > p{ color:#9cdcfe; font-size:12.5px; }
-  .theme-codes .proj{ background:#252526; border-color:#3c3c3c; }
-  .theme-codes .proj h3{ color:#dcdcaa; font-size:13px; }
-  .theme-codes .proj h3::before{ content:'function '; color:#569cd6; }
-  .theme-codes .proj p{ color:#ce9178; font-size:12.5px; }
-  .theme-codes .tag{ background:#0e2f4f; color:#4fc1ff; font-family:var(--mono-font); border-radius:4px; }
-  .theme-codes .winbody a{ color:#4fc1ff; }
+  /* ===================== THEME: Codes (Hacker/Pro Aesthetic) ===================== */
+  .theme-codes{ background:rgba(15,15,18,0.95); border:1px solid rgba(255,255,255,0.05); }
+  .theme-codes .titlebar{ background:rgba(25,25,30,0.8); border-color:#000; }
+  .theme-codes .titletext{ color:#999; font-family:var(--mono-font); font-size:12px;}
+  .theme-codes .toolbar{ background:rgba(20,20,25,0.9); color:#55ff55; border-color:#000; }
+  .theme-codes .winbody{ background:transparent; color:#00ffcc; font-family:var(--mono-font); }
+  
+  .theme-codes .winbody h2 {
+    color: #55ff55; font-family: var(--mono-font); text-shadow: 0 0 10px rgba(85,255,85,0.3);
+    overflow: hidden; white-space: nowrap; border-right: 2px solid #55ff55;
+    animation: typing 1.5s steps(20, end), blink-caret .75s step-end infinite;
+  }
+  @keyframes typing { from { width: 0 } to { width: 100% } }
+  @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #55ff55; } }
+  
+  .theme-codes .winbody h2::before{ content:'root@portfolio:~$ '; color:#ff007f; }
+  .theme-codes .winbody > p{ color:#a8a8a8; font-size:13px; }
+  .theme-codes .proj{ background:rgba(25,25,30,0.6); border:1px solid rgba(255,255,255,0.05); border-radius:12px; padding:16px; margin-bottom:12px; transition: transform 0.2s, box-shadow 0.2s; }
+  .theme-codes .proj:hover{ transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); border-color:rgba(85,255,85,0.3); }
+  .theme-codes .proj h3{ color:#ffcc00; font-size:15px; margin-top:0; }
+  .theme-codes .proj p{ color:#dcdcdc; font-size:13px; }
+  .theme-codes .tag{ background:rgba(255,255,255,0.08); color:#00ffcc; border-radius:6px; padding:4px 10px; margin-right:6px; display:inline-block; font-size:12px; border: 1px solid rgba(0,255,204,0.2);}
+  .theme-codes a { color:#ff007f !important; text-decoration: none;}
+  .theme-codes a:hover { text-decoration: underline; text-shadow: 0 0 8px rgba(255,0,127,0.5);}
 
-  /* ===================== THEME: Graphic Design (flashy, moving gradient) ===================== */
+  /* ===================== THEME: Graphic Design (Vibrant Aura) ===================== */
+  .theme-designs { border: none; }
   .theme-designs .winbody{
-    background:linear-gradient(120deg,#ff6ec7,#6a5cff,#00d4ff,#ffb86c);
-    background-size:300% 300%;
-    animation:gradientShift 8s ease infinite;
-    color:#fff;
+    background: linear-gradient(135deg, #ff007a, #7a00ff, #00d4ff, #ffea00, #ff007a);
+    background-size: 400% 400%; animation: aestheticShift 8s ease infinite; color: #fff;
   }
-  @keyframes gradientShift{
-    0%{ background-position:0% 50%; } 50%{ background-position:100% 50%; } 100%{ background-position:0% 50%; }
+  @keyframes aestheticShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+  .theme-designs .titlebar{ background:rgba(0,0,0,0.3); border-color:rgba(255,255,255,0.1); }
+  .theme-designs .titletext{ color:#fff; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+  .theme-designs .toolbar{ background:rgba(0,0,0,0.2); color:rgba(255,255,255,0.8); border:none; }
+  .theme-designs .winbody h2{ font-size:32px; font-weight:800; text-transform:uppercase; letter-spacing: 0.05em; text-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+  .theme-designs .winbody > p{ color: rgba(255,255,255,0.9); font-weight:600; font-size: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+  .swatch{ 
+    height:120px; border-radius:20px; border:1px solid rgba(255,255,255,0.4); 
+    box-shadow:0 15px 35px rgba(0,0,0,0.2); background:rgba(255,255,255,0.1); 
+    backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px); transition: transform 0.3s;
   }
-  .theme-designs .winbody h2{
-    text-transform:uppercase; letter-spacing:0.06em; font-size:24px;
-    text-shadow:0 2px 18px rgba(0,0,0,0.35);
-  }
-  .theme-designs .winbody > p{ color:rgba(255,255,255,0.92); font-weight:500; }
-  .theme-designs .swatch{
-    border:1px solid rgba(255,255,255,0.5); box-shadow:0 6px 18px rgba(0,0,0,0.25);
-  }
-  .theme-designs .toolbar{ background:#1a1030; color:#e7d9ff; border-color:#000; }
-  .theme-designs .toolbar .crumb{ color:#e7d9ff; }
-  .theme-designs .titlebar{ background:linear-gradient(#2a1a4a,#1a1030); border-color:#000; }
-  .theme-designs .titletext{ color:#fff; }
+  .swatch:hover{ transform: scale(1.05) translateY(-5px); }
 
-  /* ===================== THEME: AI Automations (live canvas background) ===================== */
-  .theme-ai .winbody{ background:#0b1020; color:#dff5ec; }
-  .theme-ai .winbody h2{ color:#5be8c9; text-shadow:0 0 14px rgba(91,232,201,0.5); }
-  .theme-ai .winbody > p{ color:#9fb3c8; }
-  .theme-ai .proj{
-    background:rgba(255,255,255,0.06); border-color:rgba(255,255,255,0.14); color:#dff5ec;
-    backdrop-filter:blur(6px);
+  /* ===================== THEME: AI Automations (Particle Glass) ===================== */
+  .theme-ai{ background:rgba(3,5,8,0.95); border:1px solid rgba(91,232,201,0.2); }
+  .theme-ai .titlebar{ background:rgba(10,15,25,0.8); border-bottom:1px solid rgba(91,232,201,0.1); }
+  .theme-ai .toolbar{ background:rgba(5,10,15,0.8); color:#5be8c9; border-bottom:1px solid rgba(91,232,201,0.1); }
+  .theme-ai .titletext{ color:#fff; }
+  .theme-ai .winbody{ background:transparent; color:#dff5ec; overflow: hidden; }
+  .theme-ai .winbody h2{ color:#fff; text-shadow:0 0 20px rgba(91,232,201,0.8); font-size: 28px; }
+  .theme-ai .proj{ 
+    background:rgba(255,255,255,0.02); border:1px solid rgba(91,232,201,0.15); 
+    backdrop-filter:blur(12px); border-radius:16px; padding: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 16px; transition: all 0.3s ease;
   }
-  .theme-ai .proj h3{ color:#8be9fd; }
-  .theme-ai .proj p{ color:#a9c4c0; }
-  .theme-ai .tag{ background:rgba(91,232,201,0.18); color:#5be8c9; }
-  .theme-ai .titlebar{ background:linear-gradient(#131a30,#0b1020); border-color:#000; }
-  .theme-ai .titletext{ color:#dff5ec; }
-  .theme-ai .toolbar{ background:#0e1526; color:#8fa4b8; border-color:#000; }
-  .theme-ai .toolbar .crumb{ color:#8fa4b8; }
-  .ai-canvas{ position:absolute; inset:0; z-index:0; }
+  .theme-ai .proj:hover{ border-color:rgba(91,232,201,0.5); box-shadow: 0 10px 40px rgba(91,232,201,0.1); }
+  .theme-ai .proj h3{ color:#5be8c9; font-size: 16px; margin-top:0;}
+  .theme-ai .tag{ background:rgba(91,232,201,0.1); color:#5be8c9; border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;}
+  .ai-canvas{ position:absolute; inset:0; z-index:0; opacity: 0.7; }
   .theme-ai .winbody > *:not(.ai-canvas){ position:relative; z-index:1; }
-  .pyapp{ background:rgba(20,26,46,0.75) !important; border-color:rgba(91,232,201,0.25) !important; }
-  .pyedit{
-    width:100%; min-height:150px; font-family:var(--mono-font);
-    font-size:12px; line-height:1.5; background:#0d1117; color:#c9d1d9;
-    border:1px solid rgba(91,232,201,0.25); border-radius:8px; padding:12px; resize:vertical;
-  }
-  .pyrow{ display:flex; align-items:center; gap:10px; margin:10px 0; }
-  .pybtn{
-    font-size:12.5px; font-weight:700; background:#28c840; color:#08350f;
-    border:none; border-radius:7px; padding:8px 16px; cursor:pointer;
-  }
-  .pybtn:hover{ filter:brightness(1.08); }
-  .pybtn:disabled{ opacity:0.6; cursor:default; }
-  .pystatus{ font-size:12px; color:#8fa4b8; }
-  .pyoutput{
-    background:#000; color:#7cff8f; font-family:var(--mono-font);
-    font-size:12px; padding:12px; border-radius:8px; white-space:pre-wrap; word-break:break-word;
-    min-height:40px; margin:0;
-  }
 
-  /* ===================== THEME: Profile (Facebook-style) ===================== */
+  /* ===================== THEME: Profile (Clean UI) ===================== */
   .theme-about .winbody{ padding:0; background:#f0f2f5; }
-  .fb-cover{
-    height:120px; background:linear-gradient(120deg,#4e7fe0,#7b5cf0 60%,#c26fd8);
-    position:relative;
-  }
-  .fb-avatar-row{ display:flex; align-items:flex-end; gap:14px; padding:0 20px; margin-top:-38px; position:relative; }
+  .fb-cover{ height:160px; background:url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=600&auto=format&fit=crop') center/cover; }
+  .fb-avatar-row{ display:flex; align-items:flex-end; gap:16px; padding:0 24px; margin-top:-50px; position:relative; }
   .fb-avatar{
-    width:76px; height:76px; border-radius:50%; border:4px solid #f0f2f5;
-    background:linear-gradient(135deg,#8e8f97,#c9ccd4);
-    display:flex; align-items:center; justify-content:center; color:#fff; font-size:26px; font-weight:700;
+    width:100px; height:100px; border-radius:50%; border:4px solid #fff;
+    background:linear-gradient(135deg,#2196f3,#3f51b5); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display:flex; align-items:center; justify-content:center; color:#fff; font-size:36px; font-weight:800; flex-shrink:0;
+  }
+  .fb-name-block{ padding-bottom:12px; }
+  .fb-name-block h2{ margin:0; font-size:26px; font-weight: 800; color:#1c1e21; letter-spacing: -0.02em;}
+  .fb-tagline{ font-size:15px; color:#65676b; margin:4px 0 0 0; font-weight: 500;}
+  .fb-bio{ background:#fff; margin:20px; padding:24px; border-radius:12px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.05);}
+  .fb-bio h3{ font-size:18px; font-weight:700; color:#1c1e21; margin:0 0 12px 0; }
+  .fb-bio p{ color: #444; font-size: 15px; line-height: 1.6;}
+
+  /* ===================== THEME: LinkedIn (Authentic App) ===================== */
+  .theme-linkedin .toolbar{ background:#fff; padding:0 16px; height:54px; gap:16px; border-bottom:1px solid #e0e0e0; }
+  .li-search{ flex:1; background:#eef3f8; border-radius:6px; padding:10px 14px; color:#000; font-size:14px; border:none; font-weight: 500;}
+  .theme-linkedin .winbody{ padding:0; background:#f4f2ee; }
+  .li-cover{ height:120px; background:url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop') center/cover; }
+  .li-avatar-row{ padding:0 24px; margin-top:-55px; position:relative; }
+  .li-avatar{
+    width:110px; height:110px; border-radius:50%; border:4px solid #fff;
+    background:#0a66c2; display:flex; align-items:center; justify-content:center; color:#fff; font-size:36px; font-weight:800; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .li-info{ padding:16px 24px 0 24px; }
+  .li-info h2{ margin:0; font-size:24px; font-weight:700; color:#000;}
+  .li-headline{ font-size:15px; color:#000; margin:6px 0; line-height: 1.4;}
+  .li-meta{ font-size:14px; color:#666; margin:0 0 16px 0; }
+  .li-btnrow{ display:flex; gap:12px; padding:0 24px 20px 24px; }
+  .li-btn-primary{ background:#0a66c2; color:#fff; border:none; border-radius:24px; padding:10px 24px; font-size:15px; font-weight:600; cursor:pointer; transition: background 0.2s;}
+  .li-btn-primary:hover{ background:#004182; }
+  .li-btn-outline{ background:#fff; color:#0a66c2; border:1.5px solid #0a66c2; border-radius:24px; padding:9px 24px; font-size:15px; font-weight:600; cursor:pointer; transition: background 0.2s, box-shadow 0.2s;}
+  .li-btn-outline:hover{ background:rgba(10,102,194,0.08); box-shadow: inset 0 0 0 1px #0a66c2;}
+  .li-section{ background:#fff; margin:12px 24px; padding:24px; border-radius:12px; box-shadow: 0 0 0 1px rgba(0,0,0,0.08); }
+  .li-section h3{ font-size:18px; font-weight: 700; margin:0 0 16px 0; color:#000;}
+  .li-section p{ color: #444; font-size: 14px; line-height: 1.6;}
+
+  /* ===================== Aesthetic Dock & Bumping Effect ===================== */
+  #dock{
+    position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
+    display:flex; align-items:flex-end; gap:12px;
+    background:rgba(255,255,255,0.25); backdrop-filter:blur(30px) saturate(2);
+    -webkit-backdrop-filter:blur(30px) saturate(2);
+    border:1px solid rgba(255,255,255,0.4);
+    border-radius:24px; padding:12px 18px; z-index:4000;
+    box-shadow:0 10px 40px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.5);
+    /* Removed overflow constraints so labels won't clip */
+  }
+  
+  .dock-item{
+    width:56px; text-align:center; cursor:pointer; position:relative;
+    transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), margin 0.2s ease;
     flex-shrink:0;
   }
-  .fb-name-block{ padding-bottom:6px; }
-  .fb-name-block h2{ margin:0; font-size:19px; }
-  .fb-tagline{ font-size:12.5px; color:var(--sub); margin:2px 0 0 0; }
-  .fb-bio{ background:#fff; margin:14px 20px 20px 20px; padding:16px 18px; border-radius:10px; border:1px solid var(--line); }
-  .fb-bio h3{ font-size:13px; text-transform:uppercase; letter-spacing:0.04em; color:var(--sub); margin:0 0 8px 0; }
-  .fb-bio p{ font-size:13.5px; }
-
-  /* ===================== THEME: LinkedIn (real app style, scrollable) ===================== */
-  .theme-linkedin .toolbar{ background:#0a66c2; padding:0 14px; height:42px; gap:14px; }
-  .li-navicon{ color:rgba(255,255,255,0.85); font-size:15px; }
-  .li-search{
-    flex:1; background:rgba(255,255,255,0.18); border-radius:6px; padding:6px 12px; color:#fff; font-size:12.5px;
+  
+  .dock-item:hover { 
+    transform: translateY(-16px) scale(1.35); 
+    z-index: 10; 
+    margin: 0 16px; /* Creates the bump push */
   }
-  .theme-linkedin .winbody{ padding:0; background:#f4f2ee; }
-  .li-cover{ height:80px; background:linear-gradient(120deg,#0a66c2,#5b9df0); }
-  .li-avatar-row{ padding:0 20px; margin-top:-36px; position:relative; }
-  .li-avatar{
-    width:72px; height:72px; border-radius:50%; border:3px solid #fff;
-    background:linear-gradient(135deg,#c9ccd4,#8e8f97);
-    display:flex; align-items:center; justify-content:center; color:#fff; font-size:24px; font-weight:700;
-  }
-  .li-info{ padding:10px 20px 0 20px; }
-  .li-info h2{ margin:0; font-size:19px; }
-  .li-headline{ font-size:13px; color:#333; margin:4px 0 2px 0; }
-  .li-meta{ font-size:12px; color:var(--sub); margin:0 0 10px 0; }
-  .li-btnrow{ display:flex; gap:8px; padding:0 20px 16px 20px; }
-  .li-btn-primary{
-    background:#0a66c2; color:#fff; border:none; border-radius:20px; padding:7px 18px; font-size:13px; font-weight:600; cursor:pointer;
-  }
-  .li-btn-outline{
-    background:#fff; color:#0a66c2; border:1.5px solid #0a66c2; border-radius:20px; padding:7px 18px; font-size:13px; font-weight:600; cursor:pointer;
-  }
-  .li-section{ background:#fff; margin:10px 20px; padding:16px 18px; border-radius:10px; border:1px solid var(--line); }
-  .li-section h3{ font-size:15px; margin:0 0 10px 0; }
-  .li-section p{ font-size:13px; color:#333; }
-  .li-exp-row{ display:flex; gap:12px; margin-bottom:14px; }
-  .li-exp-icon{
-    width:40px; height:40px; border-radius:8px; background:linear-gradient(135deg,#0a66c2,#5b9df0);
-    flex-shrink:0; display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; font-size:14px;
-  }
-  .li-exp-role{ font-size:13.5px; font-weight:600; margin:0; }
-  .li-exp-company{ font-size:12.5px; color:var(--sub); margin:1px 0; }
-  .li-exp-date{ font-size:11.5px; color:#8a8a8e; margin:0; }
-  .li-skill{
-    display:inline-block; font-size:11.5px; font-weight:600; color:#0a66c2; background:#eaf3ff;
-    padding:4px 11px; margin:0 6px 6px 0; border-radius:20px;
-  }
-
-  /* ===================== Dock ===================== */
-  #dock{
-    position:fixed; left:50%; bottom:12px; transform:translateX(-50%);
-    display:flex; align-items:flex-end; gap:16px;
-    background:rgba(255,255,255,0.35); backdrop-filter:blur(22px) saturate(1.8);
-    -webkit-backdrop-filter:blur(22px) saturate(1.8);
-    border:1px solid rgba(255,255,255,0.6);
-    border-radius:20px; padding:10px 16px; z-index:4000;
-    box-shadow:0 14px 34px rgba(0,0,0,0.3);
-    max-width:94vw; overflow-x:auto; overflow-y:visible;
-  }
-  .dock-item{
-    width:52px; text-align:center; cursor:pointer; position:relative;
-    transition:transform .15s cubic-bezier(.2,.9,.3,1.3); flex-shrink:0;
-  }
-  .dock-item:hover{ transform:translateY(-10px) scale(1.14); z-index:10; }
+  
   .icon-square{
-    width:52px; height:52px; border-radius:13px; margin:0 auto;
+    width:100%; height:56px; border-radius:14px; margin:0 auto;
     display:flex; align-items:center; justify-content:center;
-    box-shadow:0 6px 14px rgba(0,0,0,0.3), 0 1px 0 rgba(255,255,255,0.25) inset;
-    position:relative;
+    box-shadow:0 8px 18px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.5);
+    transition: box-shadow 0.2s;
   }
-  .icon-square svg{ width:60%; height:60%; }
+  .dock-item:hover .icon-square { box-shadow:0 12px 24px rgba(0,0,0,0.35), inset 0 1px 1px rgba(255,255,255,0.6); }
+  .icon-square svg{ width:55%; height:55%; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+  
+  /* Restored and Fixed Custom Hover Labels */
   .dock-label{
-    position:absolute; bottom:100%; left:50%; transform:translateX(-50%) translateY(4px);
-    font-size:11px; font-weight:600; white-space:nowrap;
-    background:rgba(30,30,32,0.9); color:#fff;
-    border-radius:6px; padding:4px 10px; pointer-events:none;
-    box-shadow:0 3px 8px rgba(0,0,0,0.25); margin-bottom:8px;
-    opacity:0; visibility:hidden; transition:opacity .12s ease, transform .12s ease;
+    position:absolute; bottom:calc(100% + 15px); left:50%; transform:translateX(-50%) scale(0.9);
+    font-size:12px; font-weight:600; letter-spacing: 0.02em; white-space:nowrap;
+    background:rgba(20, 20, 25, 0.85); color:#fff; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius:8px; padding:6px 12px; pointer-events:none;
+    box-shadow:0 8px 16px rgba(0,0,0,0.2); margin-bottom:0;
+    opacity:0; visibility:hidden; transition:all .2s cubic-bezier(0.25, 1, 0.5, 1);
   }
-  .dock-item:hover .dock-label{ opacity:1; visibility:visible; transform:translateX(-50%) translateY(0); }
-  .dock-dot{
-    width:4px; height:4px; border-radius:50%; background:#3a3a3c; margin:5px auto 0 auto; opacity:0;
-  }
-  .dock-item.running .dock-dot{ opacity:1; }
-  .dock-sep{ width:1px; align-self:stretch; background:rgba(0,0,0,0.15); margin:6px 2px; }
+  .dock-item:hover .dock-label{ opacity:1; visibility:visible; transform:translateX(-50%) scale(1); }
+  
+  .dock-sep{ width:1px; align-self:stretch; background:rgba(0,0,0,0.15); margin:6px 5px; }
+  
+  #trash .icon-square { background:linear-gradient(150deg,#777,#444); }
   #trash.trash-hover .icon-square{
-    background:linear-gradient(150deg,#ff8a80,#d32f2f) !important;
-    transform:scale(1.18);
+    background:linear-gradient(150deg,#ff5252,#b71c1c) !important;
+    transform:scale(1.2); box-shadow: 0 0 25px rgba(255,0,0,0.6);
   }
-  @keyframes bounce{
-    0%{ transform:translateY(0); } 30%{ transform:translateY(-24px); } 50%{ transform:translateY(0); }
-    65%{ transform:translateY(-11px); } 80%{ transform:translateY(0); } 100%{ transform:translateY(0); }
-  }
-  .dock-item.bounce{ animation:bounce .55s ease; }
-
+  
   @media (max-width:560px){
     .window{ min-width:88vw !important; max-width:92vw; }
-    .dock-item{ width:42px; }
-    .icon-square{ width:42px; height:42px; border-radius:11px; }
-    .dock-label{ font-size:9.5px; }
-    #dock{ gap:10px; padding:8px 12px; }
+    .dock-item{ width:44px; }
+    .icon-square{ height:44px; border-radius:12px; }
+    .dock-label{ font-size:10px; }
+    #dock{ gap:8px; padding:10px 12px; }
   }
 </style>
 </head>
@@ -361,7 +300,7 @@
 <div id="boot">
   <div class="boot-mark"></div>
   <div class="boot-title">LOADING</div>
-  <div class="boot-sub">Booting you into Melvin Exiomo's profile…</div>
+  <div class="boot-sub">loading you to MELVIN EXIOMO's profilke</div>
   <div class="boot-bar"><div class="boot-bar-fill"></div></div>
 </div>
 
@@ -396,130 +335,88 @@
 </div>
 
 <div id="dock">
-  <div class="dock-item" data-win="codes" title="Codes">
+  <!-- Removed title="..." so the ugly browser tooltips won't override the aesthetic labels -->
+  <div class="dock-item" data-win="codes">
     <div class="dock-label">Codes</div>
-    <div class="icon-square" style="background:linear-gradient(150deg,#3a3f92,#171a3d);">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M8 6L2 12L8 18" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 6L22 12L16 18" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="icon-square" style="background:linear-gradient(150deg,#1e1e1e,#333);">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M8 6L2 12L8 18M16 6L22 12L16 18" stroke="#55ff55" stroke-width="2.5" stroke-linecap="round"/></svg>
     </div>
-    <div class="dock-dot"></div>
   </div>
-  <div class="dock-item" data-win="designs" title="Graphic Design">
+  <div class="dock-item" data-win="designs">
     <div class="dock-label">Graphic Design</div>
-    <div class="icon-square" style="background:linear-gradient(150deg,#ff8a65,#e5417a 60%,#8e44ec);">
-      <svg viewBox="0 0 24 24" fill="none"><circle cx="8" cy="8" r="2.6" fill="#fff"/><circle cx="16" cy="8" r="2.6" fill="#fff" opacity="0.8"/><circle cx="8" cy="16" r="2.6" fill="#fff" opacity="0.8"/><circle cx="16" cy="16" r="2.6" fill="#fff" opacity="0.6"/></svg>
+    <div class="icon-square" style="background:linear-gradient(150deg,#ff007a,#00d4ff);">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="6" fill="#fff" opacity="0.9"/><circle cx="16" cy="8" r="4" fill="#fff" opacity="0.6"/></svg>
     </div>
-    <div class="dock-dot"></div>
   </div>
-  <div class="dock-item" data-win="ai" title="AI Automations">
+  <div class="dock-item" data-win="ai">
     <div class="dock-label">AI Automations</div>
-    <div class="icon-square" style="background:linear-gradient(150deg,#38d4a4,#0f8f7a);">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l1.8 5.6L19 9l-5.2 1.4L12 16l-1.8-5.6L5 9l5.2-1.4L12 2z" fill="#fff"/><path d="M19 15l0.8 2.3L22 18l-2.2 0.7L19 21l-0.8-2.3L16 18l2.2-0.7L19 15z" fill="#fff" opacity="0.8"/></svg>
+    <div class="icon-square" style="background:linear-gradient(150deg,#00ffcc,#0f8f7a);">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 2l1.8 5.6L19 9l-5.2 1.4L12 16l-1.8-5.6L5 9l5.2-1.4L12 2z" fill="#fff"/></svg>
     </div>
-    <div class="dock-dot"></div>
   </div>
-  <div class="dock-item" data-win="about" title="Profile">
+  <div class="dock-item" data-win="about">
     <div class="dock-label">Profile</div>
-    <div class="icon-square" style="background:linear-gradient(150deg,#c9ccd4,#8e8f97);">
-      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="3.6" fill="#fff"/><path d="M5 20c0-3.9 3.1-6.5 7-6.5s7 2.6 7 6.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+    <div class="icon-square" style="background:linear-gradient(150deg,#1877F2,#0d5ec4);">
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z"/></svg>
     </div>
-    <div class="dock-dot"></div>
   </div>
-  <div class="dock-item" data-win="linkedin" title="LinkedIn Profile">
+  <div class="dock-item" data-win="linkedin">
     <div class="dock-label">LinkedIn</div>
-    <div class="icon-square" style="background:linear-gradient(150deg,#2f8fe0,#0a66c2);">
-      <svg viewBox="0 0 24 24" fill="none"><circle cx="7" cy="7" r="2" fill="#fff"/><rect x="5.4" y="10.5" width="3.2" height="8.5" rx="1" fill="#fff"/><path d="M12.5 19V10.5h3v1.4c0.7-1 1.9-1.7 3.3-1.7 2.4 0 3.7 1.6 3.7 4.4V19h-3.2v-4c0-1.2-0.5-2-1.6-2-0.9 0-1.4 0.6-1.6 1.2-0.1 0.2-0.1 0.5-0.1 0.8V19h-3.5z" fill="#fff"/></svg>
+    <div class="icon-square" style="background:linear-gradient(150deg,#0a66c2,#004182);">
+      <svg viewBox="0 0 24 24" fill="#fff"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
     </div>
-    <div class="dock-dot"></div>
   </div>
   <div class="dock-sep"></div>
-  <div class="dock-item" id="trash" title="Trash — drag a window here to close it">
-    <div class="dock-label">Trash</div>
-    <div class="icon-square" style="background:linear-gradient(150deg,#d9dbe0,#a9abb4); transition:transform .15s ease, background .15s ease;">
-      <svg viewBox="0 0 24 24" fill="none"><path d="M6 7h12l-1 13H7L6 7z" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/><path d="M4 7h16M10 7V4h4v3" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+  <div class="dock-item" id="trash">
+    <div class="dock-label">Trash (Drag to Close)</div>
+    <div class="icon-square">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M6 7h12l-1 13H7L6 7z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><path d="M4 7h16M10 7V4h4v3" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
     </div>
   </div>
 </div>
 
-<!-- ================= WINDOW CONTENT TEMPLATES ================= -->
+<!-- ================= TEMPLATES ================= -->
 <template id="tpl-codes">
   <h2>Codes</h2>
-  <p>A folder of things I've built. Swap these for your real repos and live links.</p>
+  <p>> Initializing repository scan...</p>
   <div class="proj">
-    <h3>Task Tracker App</h3>
-    <p>A full-stack app for managing daily tasks, with drag-and-drop boards and a lightweight API backend.</p>
-    <span class="tag">React</span><span class="tag">Node.js</span><span class="tag">PostgreSQL</span>
-    <p><a href="#" onclick="return false;">View repository →</a> &nbsp; <a href="#" onclick="return false;">Live demo →</a></p>
+    <h3>[+] Task Tracker App</h3>
+    <p>A full-stack app built for terminal users. Features raw socket connections.</p>
+    <span class="tag">System.out.React</span>
+    <span class="tag">Node.js</span>
   </div>
   <div class="proj">
-    <h3>Personal Finance Dashboard</h3>
-    <p>Visualizes spending habits from imported bank statements with interactive charts.</p>
-    <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Chart.js</span>
-    <p><a href="#" onclick="return false;">View repository →</a></p>
-  </div>
-  <div class="proj">
-    <h3>Browser Game</h3>
-    <p>A small puzzle game built to learn canvas rendering and game loops from scratch.</p>
-    <span class="tag">JavaScript</span><span class="tag">Canvas</span>
-    <p><a href="#" onclick="return false;">Play it →</a></p>
+    <h3>[+] Security Dashboard</h3>
+    <p>Visualizing node traffic across multiple proxy servers in real time.</p>
+    <span class="tag">Python</span>
+    <span class="tag">Pandas</span>
   </div>
 </template>
 
 <template id="tpl-designs">
   <h2>Graphic Design</h2>
-  <p>A sampler of visual work. Replace each swatch below with your own image files.</p>
+  <p>Immersive visual aesthetics. (Live Background)</p>
   <div class="grid2">
-    <div class="swatch" style="background:rgba(255,255,255,0.22); backdrop-filter:blur(6px);"></div>
-    <div class="swatch" style="background:rgba(255,255,255,0.22); backdrop-filter:blur(6px);"></div>
-    <div class="swatch" style="background:rgba(255,255,255,0.22); backdrop-filter:blur(6px);"></div>
-    <div class="swatch" style="background:rgba(255,255,255,0.22); backdrop-filter:blur(6px);"></div>
+    <div class="swatch"></div>
+    <div class="swatch"></div>
+    <div class="swatch"></div>
+    <div class="swatch"></div>
   </div>
-  <p style="margin-top:14px;">Brand identity, social media sets, and poster layouts — swap in thumbnails and short captions describing the brief, the tools used, and a link to the full case study.</p>
 </template>
 
 <template id="tpl-ai">
   <h2>AI Automations</h2>
-  <p>Workflows and tools built to automate repetitive work.</p>
-
-  <div class="proj pyapp">
-    <h3>🐍 Try it live — Email Triage Bot (Python)</h3>
-    <p>This is real Python, running in your browser. Hit Run and watch it actually execute.</p>
-    <textarea id="pyCode" class="pyedit" spellcheck="false">def classify(email_text):
-    text = email_text.lower()
-    if "refund" in text or "charge" in text:
-        return "Billing"
-    elif "error" in text or "bug" in text or "broken" in text:
-        return "Technical Support"
-    elif "cancel" in text:
-        return "Retention"
-    else:
-        return "General Inquiry"
-
-emails = [
-    "I was charged twice for my subscription this month",
-    "The app keeps crashing when I try to log in",
-    "I'd like to cancel my plan please",
-    "Just wanted to say thanks for the great support!"
-]
-
-for email in emails:
-    category = classify(email)
-    print(f"[{category}] {email}")</textarea>
-    <div class="pyrow">
-      <button id="pyRun" class="pybtn">▶ Run</button>
-      <span id="pyStatus" class="pystatus"></span>
-    </div>
-    <pre id="pyOutput" class="pyoutput">Click Run to execute this script for real →</pre>
-  </div>
-
+  <p>Live neural-mesh processing running locally.</p>
   <div class="proj">
     <h3>Content Repurposing Pipeline</h3>
-    <p>Turns one long-form article into social captions, a newsletter blurb, and a short script.</p>
-    <span class="tag">Python</span><span class="tag">Claude API</span>
+    <p>Turns long-form text into social media clusters automatically.</p>
+    <span class="tag">Python</span>
+    <span class="tag">Claude API</span>
   </div>
   <div class="proj">
     <h3>Meeting Notes Summarizer</h3>
     <p>Takes a raw transcript and outputs a clean summary with action items assigned to each person.</p>
-    <span class="tag">n8n</span><span class="tag">Claude API</span>
+    <span class="tag">n8n Workflow</span>
   </div>
 </template>
 
@@ -529,14 +426,12 @@ for email in emails:
     <div class="fb-avatar">ME</div>
     <div class="fb-name-block">
       <h2>Melvin Exiomo</h2>
-      <p class="fb-tagline">Developer · Designer · Automation Builder</p>
+      <p class="fb-tagline">Works at AI Automation · Lives in Philippines</p>
     </div>
   </div>
   <div class="fb-bio">
-    <h3>Bio</h3>
-    <p>Hi, I'm Melvin — swap this paragraph for a short, plain-spoken bio: what you do, what you're curious about, and what kind of work you're looking for next.</p>
-    <p>A second short paragraph works well for background — where you've worked, what you've studied, or what got you into this field.</p>
-    <p>Feel free to add a line about hobbies or interests outside of work to make this feel human.</p>
+    <h3>Intro</h3>
+    <p>Developer, Designer, and Automation Builder. Looking to make processes smarter and design bolder. I specialize in bridging the gap between highly aesthetic frontends and intelligent, automated backends.</p>
   </div>
 </template>
 
@@ -545,7 +440,7 @@ for email in emails:
   <div class="li-avatar-row"><div class="li-avatar">ME</div></div>
   <div class="li-info">
     <h2>Melvin Exiomo</h2>
-    <p class="li-headline">Developer · Designer · Automation Builder</p>
+    <p class="li-headline">Software Engineer & UI/UX Designer | Building AI Solutions</p>
     <p class="li-meta">Philippines · 500+ connections</p>
   </div>
   <div class="li-btnrow">
@@ -554,50 +449,29 @@ for email in emails:
   </div>
   <div class="li-section">
     <h3>About</h3>
-    <p>Swap this with your real summary — what you do, the kind of problems you like solving, and what you're looking for next. Keep it to a short paragraph or two.</p>
+    <p>Passionate about crafting automation tools that save time, alongside engaging interfaces. I build products that are not just functional, but memorable.</p>
   </div>
   <div class="li-section">
     <h3>Experience</h3>
-    <div class="li-exp-row">
-      <div class="li-exp-icon">A</div>
-      <div>
-        <p class="li-exp-role">Automation Developer</p>
-        <p class="li-exp-company">Your Company · Full-time</p>
-        <p class="li-exp-date">2024 — Present</p>
-      </div>
-    </div>
-    <div class="li-exp-row">
-      <div class="li-exp-icon">B</div>
-      <div>
-        <p class="li-exp-role">Freelance Web Developer</p>
-        <p class="li-exp-company">Self-employed</p>
-        <p class="li-exp-date">2022 — 2024</p>
-      </div>
-    </div>
+    <p style="margin-bottom:4px;"><strong>Automation Developer</strong></p>
+    <p style="margin-top:0; color:#666;">2024 - Present</p>
   </div>
-  <div class="li-section">
-    <h3>Skills</h3>
-    <span class="li-skill">Python</span><span class="li-skill">React</span><span class="li-skill">Automation</span><span class="li-skill">UI Design</span><span class="li-skill">Claude API</span>
-  </div>
-  <p style="text-align:center; font-size:11.5px; color:#8a8a8e; padding:6px 0 18px 0;">(Replace name, headline, and sections above with your real LinkedIn info — or point the top bar's link to your live profile.)</p>
 </template>
-<!-- ============================================================== -->
 
 <script>
-  // ---- boot screen ----
-  setTimeout(()=>{
-    document.getElementById('boot').classList.add('hide');
-  }, 5000);
+  // Loading Screen Timer
+  setTimeout(()=>{ document.getElementById('boot').classList.add('hide'); }, 5000);
 
+  // Clock
   function tick(){
     const d = new Date();
     let h = d.getHours(); const m = d.getMinutes().toString().padStart(2,'0');
     const ampm = h >= 12 ? 'PM' : 'AM';
-    h = h % 12; if(h===0) h = 12;
-    document.getElementById('clock').textContent = h + ':' + m + ' ' + ampm;
+    document.getElementById('clock').textContent = (h % 12 || 12) + ':' + m + ' ' + ampm;
   }
   tick(); setInterval(tick, 15000);
 
+  // Top Menu Interactions
   document.querySelectorAll('.menu-item').forEach(item=>{
     item.addEventListener('click', (e)=>{
       const wasOpen = item.classList.contains('open');
@@ -606,88 +480,41 @@ for email in emails:
       e.stopPropagation();
     });
   });
-  document.addEventListener('click', ()=>{
-    document.querySelectorAll('.menu-item').forEach(m=>m.classList.remove('open'));
-  });
+  document.addEventListener('click', ()=>{ document.querySelectorAll('.menu-item').forEach(m=>m.classList.remove('open')); });
   document.querySelectorAll('[data-open]').forEach(el=>{
     el.addEventListener('click', ()=> openWindow(el.getAttribute('data-open')) );
   });
-  document.getElementById('aboutThis').addEventListener('click', ()=>{
-    alert('A desktop-style portfolio.\nClick a Dock icon to open it like an app.\nDrag windows by their title bar, resize from the corner, and drag a window onto the Trash to close it.');
-  });
-  document.getElementById('closeAll').addEventListener('click', ()=>{
-    Object.keys(openWins).forEach(k=> closeWindow(k));
-  });
+  document.getElementById('aboutThis').addEventListener('click', ()=> alert('Aesthetic Desktop Portfolio.\nDrag windows by title, resize from corner, drop to trash to close.'));
+  document.getElementById('closeAll').addEventListener('click', ()=> { Object.keys(openWins).forEach(k=> openWins[k].remove()); });
 
-  const titles = {
-    codes: 'Codes', designs: 'Graphic Design', ai: 'AI Automations',
-    about: 'Profile', linkedin: 'LinkedIn Profile'
-  };
-  const crumbs = {
-    codes: 'Macintosh HD ▸ Portfolio ▸ Codes',
-    designs: 'Macintosh HD ▸ Portfolio ▸ Graphic Design',
-    ai: 'Macintosh HD ▸ Portfolio ▸ AI Automations'
-  };
+  const titles = { codes: 'Codes', designs: 'Graphic Design', ai: 'AI Automations', about: 'Profile', linkedin: 'LinkedIn Profile' };
+  const crumbs = { codes: 'Macintosh HD ▸ Portfolio ▸ Codes', designs: 'Macintosh HD ▸ Portfolio ▸ Graphic Design', ai: 'Macintosh HD ▸ Portfolio ▸ AI Automations' };
 
-  let zTop = 100;
   const openWins = {};
-  const aiRuntime = {}; // key -> { raf, ro }
+  let zTop = 100;
 
-  function setActiveApp(name){
-    document.getElementById('activeAppName').textContent = name;
-  }
-  function dockItemFor(key){
-    return document.querySelector('.dock-item[data-win="'+key+'"]');
-  }
+  function setActiveApp(name){ document.getElementById('activeAppName').textContent = name; }
 
   function toolbarFor(key){
-    if(key === 'linkedin'){
-      return `<div class="toolbar">
-        <span class="li-navicon">⌂</span><span class="li-navicon">👥</span>
-        <div class="li-search">Search</div>
-        <span class="li-navicon">💬</span><span class="li-navicon">🔔</span>
-      </div>`;
-    }
-    if(key === 'about'){
-      return '';
-    }
+    if(key === 'linkedin') return `<div class="toolbar"><span style="font-size:16px;">⌂ 👥</span><input class="li-search" placeholder="Search"><span style="font-size:16px;">💬 🔔</span></div>`;
+    if(key === 'about') return '';
     return `<div class="toolbar"><span class="crumb">${crumbs[key] || titles[key]}</span></div>`;
   }
 
   function openWindow(key){
-    if(!key) return;
-    if(openWins[key]){
-      bringToFront(openWins[key]);
-      setActiveApp(titles[key]);
-      return;
-    }
+    if(openWins[key]){ bringToFront(openWins[key]); setActiveApp(titles[key]); return; }
     const tpl = document.getElementById('tpl-'+key);
     if(!tpl) return;
 
-    const dockEl = dockItemFor(key);
-    if(dockEl){
-      dockEl.classList.add('bounce');
-      setTimeout(()=> dockEl.classList.remove('bounce'), 550);
-      dockEl.classList.add('running');
-    }
-
     const win = document.createElement('div');
     win.className = 'window theme-' + key;
-    const isMobile = window.innerWidth < 560;
-    const w = isMobile ? Math.floor(window.innerWidth*0.9) : 440;
-    const openCount = Object.keys(openWins).length;
-    const left = isMobile ? Math.floor(window.innerWidth*0.05) : (100 + openCount*30);
-    const top = isMobile ? 46 : (50 + openCount*28);
-    win.style.width = w+'px';
-    win.style.left = left+'px';
-    win.style.top = top+'px';
-    win.style.maxHeight = (window.innerHeight - top - 100) + 'px';
+    win.style.width = '480px'; win.style.height = '460px'; 
+    win.style.left = (80 + Object.keys(openWins).length*40) + 'px';
+    win.style.top = (60 + Object.keys(openWins).length*30) + 'px';
 
     win.innerHTML = `
       <div class="titlebar">
-        <div class="traffic">
-          <span class="tf-close" title="Close">&#10005;</span><span class="tf-min" title="Minimize">&#8722;</span><span class="tf-zoom" title="Zoom">&#10021;</span>
-        </div>
+        <div class="traffic"><span class="tf-close">x</span><span class="tf-min">-</span><span class="tf-zoom">+</span></div>
         <div class="titletext">${titles[key]}</div>
       </div>
       ${toolbarFor(key)}
@@ -699,292 +526,101 @@ for email in emails:
     openWins[key] = win;
     bringToFront(win);
     setActiveApp(titles[key]);
-
+    
+    // AI Background Script (Realistic Particle Web)
     if(key === 'ai'){
-      setupPyRunner(win);
-      setupAIBackground(win, key);
-    }
-
-    win.querySelector('.tf-close').addEventListener('click', (e)=>{
-      e.stopPropagation();
-      closeWindow(key);
-    });
-    win.querySelector('.tf-min').addEventListener('click', (e)=>{
-      e.stopPropagation();
-      minimizeWindow(key);
-    });
-    win.querySelector('.tf-zoom').addEventListener('click', (e)=>{
-      e.stopPropagation();
-      toggleZoom(win);
-    });
-
-    win.addEventListener('mousedown', ()=>{ bringToFront(win); setActiveApp(titles[key]); });
-    win.addEventListener('touchstart', ()=>{ bringToFront(win); setActiveApp(titles[key]); }, {passive:true});
-
-    makeWindowDraggable(win, key);
-    makeWindowResizable(win);
-  }
-
-  function teardownAI(key){
-    const rt = aiRuntime[key];
-    if(!rt) return;
-    if(rt.raf) cancelAnimationFrame(rt.raf);
-    if(rt.ro) rt.ro.disconnect();
-    delete aiRuntime[key];
-  }
-
-  function closeWindow(key){
-    const win = openWins[key];
-    if(!win) return;
-    teardownAI(key);
-    win.remove();
-    delete openWins[key];
-    const dockEl = dockItemFor(key);
-    if(dockEl) dockEl.classList.remove('running');
-    setActiveApp('Finder');
-  }
-
-  function minimizeWindow(key){
-    const win = openWins[key];
-    if(!win) return;
-    win.style.display = 'none';
-    win.dataset.minimized = '1';
-    setActiveApp('Finder');
-  }
-
-  function toggleZoom(win){
-    if(win.dataset.zoomed === '1'){
-      win.style.width = win.dataset.prevW;
-      win.style.height = win.dataset.prevH;
-      win.style.left = win.dataset.prevL;
-      win.style.top = win.dataset.prevT;
-      win.dataset.zoomed = '0';
-    } else {
-      win.dataset.prevW = win.style.width;
-      win.dataset.prevH = win.style.height;
-      win.dataset.prevL = win.style.left;
-      win.dataset.prevT = win.style.top;
-      win.style.left = '3vw';
-      win.style.top = '40px';
-      win.style.width = '94vw';
-      win.style.height = (window.innerHeight - 120) + 'px';
-      win.dataset.zoomed = '1';
-    }
-  }
-
-  document.querySelectorAll('.dock-item[data-win]').forEach(el=>{
-    el.addEventListener('click', ()=>{
-      const key = el.getAttribute('data-win');
-      const win = openWins[key];
-      if(win && win.dataset.minimized === '1'){
-        win.style.display = 'flex';
-        win.dataset.minimized = '0';
-        bringToFront(win);
-        setActiveApp(titles[key]);
-        return;
+      const cvs = document.createElement('canvas');
+      cvs.className = 'ai-canvas';
+      win.querySelector('.winbody').prepend(cvs);
+      const ctx = cvs.getContext('2d');
+      let pts = Array.from({length: 45}, ()=>({ x:Math.random()*480, y:Math.random()*460, vx:(Math.random()-0.5)*1.5, vy:(Math.random()-0.5)*1.5 }));
+      
+      function renderMesh(){
+        if(!win.isConnected) return; // stop if closed
+        cvs.width = win.clientWidth; cvs.height = win.clientHeight;
+        ctx.clearRect(0,0,cvs.width,cvs.height);
+        pts.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if(p.x < 0 || p.x > cvs.width) p.vx *= -1;
+          if(p.y < 0 || p.y > cvs.height) p.vy *= -1;
+        });
+        for(let i=0; i<pts.length; i++){
+          for(let j=i+1; j<pts.length; j++){
+            let d = Math.hypot(pts[i].x-pts[j].x, pts[i].y-pts[j].y);
+            if(d < 90){
+              ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y);
+              ctx.strokeStyle = `rgba(91, 232, 201, ${0.4 * (1 - d/90)})`; ctx.stroke();
+            }
+          }
+        }
+        requestAnimationFrame(renderMesh);
       }
-      openWindow(key);
-    });
-  });
-
-  function bringToFront(win){
-    zTop += 1;
-    win.style.zIndex = zTop;
-  }
-
-  function rectsOverlap(a, b){
-    return !(a.right < b.left || a.left > b.right || a.bottom < b.top || a.top > b.bottom);
-  }
-
-  function dropOnTrashIfNeeded(win, key){
-    const trash = document.getElementById('trash');
-    const wr = win.getBoundingClientRect();
-    const tr = trash.getBoundingClientRect();
-    trash.classList.remove('trash-hover');
-    if(rectsOverlap(wr, tr)){
-      const tcx = tr.left + tr.width/2, tcy = tr.top + tr.height/2;
-      win.style.transition = 'all .25s ease';
-      win.style.left = (tcx - wr.width/2) + 'px';
-      win.style.top = (tcy - wr.height/2) + 'px';
-      win.style.transform = 'scale(0.05)';
-      win.style.opacity = '0';
-      setTimeout(()=> closeWindow(key), 240);
-      return true;
+      renderMesh();
     }
-    return false;
-  }
 
-  function checkTrashHover(win){
-    const trash = document.getElementById('trash');
-    const wr = win.getBoundingClientRect();
-    const tr = trash.getBoundingClientRect();
-    if(rectsOverlap(wr, tr)) trash.classList.add('trash-hover');
-    else trash.classList.remove('trash-hover');
-  }
-
-  function makeWindowDraggable(win, key){
-    const bar = win.querySelector('.titlebar');
-    let dragging=false, sx,sy,ox,oy;
-    bar.addEventListener('mousedown', (e)=>{
+    // Drag Logic & Drop to Trash
+    let isDragging = false, ox, oy, sx, sy;
+    win.querySelector('.titlebar').addEventListener('mousedown', (e)=>{
       if(e.target.closest('.traffic')) return;
-      dragging=true; sx=e.clientX; sy=e.clientY; ox=win.offsetLeft; oy=win.offsetTop;
-      bringToFront(win); setActiveApp(titles[key]);
-      e.preventDefault();
+      isDragging = true; bringToFront(win); setActiveApp(titles[key]);
+      ox = win.offsetLeft; oy = win.offsetTop; sx = e.clientX; sy = e.clientY;
     });
     window.addEventListener('mousemove', (e)=>{
-      if(!dragging) return;
-      win.style.left = Math.max(0, ox + (e.clientX-sx)) + 'px';
-      win.style.top = Math.max(26, oy + (e.clientY-sy)) + 'px';
-      checkTrashHover(win);
+      if(!isDragging) return;
+      win.style.left = Math.max(0, ox + e.clientX - sx) + 'px';
+      win.style.top = Math.max(28, oy + e.clientY - sy) + 'px';
+      
+      // Hovering Trash
+      let tBox = document.getElementById('trash').getBoundingClientRect();
+      let wBox = win.getBoundingClientRect();
+      if(!(wBox.right < tBox.left || wBox.left > tBox.right || wBox.bottom < tBox.top || wBox.top > tBox.bottom)){
+        document.getElementById('trash').classList.add('trash-hover');
+      } else { document.getElementById('trash').classList.remove('trash-hover'); }
     });
     window.addEventListener('mouseup', ()=>{
-      if(!dragging) return;
-      dragging=false;
-      dropOnTrashIfNeeded(win, key);
+      if(isDragging && document.getElementById('trash').classList.contains('trash-hover')){
+        win.style.transform = 'scale(0.1)'; win.style.opacity = '0'; win.style.transition = 'all 0.2s';
+        setTimeout(()=>{ win.remove(); delete openWins[key]; }, 200);
+        document.getElementById('trash').classList.remove('trash-hover');
+      }
+      isDragging = false;
     });
 
-    let tdragging=false, tsx,tsy,tox,toy;
-    bar.addEventListener('touchstart', (e)=>{
-      if(e.target.closest('.traffic')) return;
-      const t=e.touches[0];
-      tdragging=true; tsx=t.clientX; tsy=t.clientY; tox=win.offsetLeft; toy=win.offsetTop;
-      bringToFront(win); setActiveApp(titles[key]);
-    }, {passive:true});
-    bar.addEventListener('touchmove', (e)=>{
-      if(!tdragging) return;
-      const t=e.touches[0];
-      win.style.left = Math.max(0, tox + (t.clientX-tsx)) + 'px';
-      win.style.top = Math.max(26, toy + (t.clientY-tsy)) + 'px';
-      checkTrashHover(win);
-    }, {passive:true});
-    bar.addEventListener('touchend', ()=>{
-      if(!tdragging) return;
-      tdragging=false;
-      dropOnTrashIfNeeded(win, key);
-    });
-  }
-
-  function makeWindowResizable(win){
+    // Resize logic
     const handle = win.querySelector('.resize');
-    let resizing=false, sx,sy,sw,sh;
+    let resizing=false, rw, rh;
     handle.addEventListener('mousedown', (e)=>{
-      resizing=true; sx=e.clientX; sy=e.clientY;
-      sw=win.offsetWidth; sh=win.offsetHeight;
+      resizing=true; sx=e.clientX; sy=e.clientY; rw=win.offsetWidth; rh=win.offsetHeight;
       e.preventDefault(); e.stopPropagation();
     });
     window.addEventListener('mousemove', (e)=>{
       if(!resizing) return;
-      win.style.width = Math.max(260, sw + (e.clientX-sx)) + 'px';
-      win.style.height = Math.max(180, sh + (e.clientY-sy)) + 'px';
+      win.style.width = Math.max(300, rw + (e.clientX-sx)) + 'px';
+      win.style.height = Math.max(200, rh + (e.clientY-sy)) + 'px';
     });
     window.addEventListener('mouseup', ()=> resizing=false);
+
+    // Traffic light buttons
+    win.querySelector('.tf-close').onclick = (e) => { e.stopPropagation(); win.remove(); delete openWins[key]; setActiveApp('Finder'); };
+    win.querySelector('.tf-min').onclick = (e) => { e.stopPropagation(); win.style.display = 'none'; setActiveApp('Finder'); };
+    win.querySelector('.tf-zoom').onclick = (e) => { 
+      e.stopPropagation();
+      if(!win.dataset.max) { win.dataset.prevW = win.style.width; win.dataset.prevH = win.style.height; win.dataset.prevL = win.style.left; win.dataset.prevT = win.style.top; win.style.width = '95vw'; win.style.height = '85vh'; win.style.left = '2.5vw'; win.style.top = '40px'; win.dataset.max = '1'; }
+      else { win.style.width = win.dataset.prevW; win.style.height = win.dataset.prevH; win.style.left = win.dataset.prevL; win.style.top = win.dataset.prevT; win.dataset.max = ''; }
+    };
+    win.addEventListener('mousedown', ()=>{ bringToFront(win); setActiveApp(titles[key]); });
   }
 
-  // open Codes by default so the desktop doesn't feel empty on load
-  openWindow('codes');
-
-  // ---- Real, in-browser Python execution (Pyodide) for the AI Automations app ----
-  let pyodideInstance = null;
-  let pyodideLoading = null;
-
-  function loadPyodideOnce(){
-    if(pyodideInstance) return Promise.resolve(pyodideInstance);
-    if(pyodideLoading) return pyodideLoading;
-    pyodideLoading = new Promise((resolve, reject)=>{
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
-      script.onload = async ()=>{
-        try{
-          pyodideInstance = await window.loadPyodide();
-          resolve(pyodideInstance);
-        } catch(err){ reject(err); }
-      };
-      script.onerror = ()=> reject(new Error('Could not load the Python runtime.'));
-      document.head.appendChild(script);
+  function bringToFront(win){ zTop++; win.style.zIndex = zTop; }
+  
+  document.querySelectorAll('.dock-item[data-win]').forEach(el=>{
+    el.addEventListener('click', ()=>{
+      const key = el.getAttribute('data-win');
+      if(openWins[key] && openWins[key].style.display === 'none'){
+        openWins[key].style.display = 'flex'; bringToFront(openWins[key]); setActiveApp(titles[key]);
+      } else { openWindow(key); }
     });
-    return pyodideLoading;
-  }
-
-  function setupPyRunner(win){
-    const runBtn = win.querySelector('#pyRun');
-    const codeBox = win.querySelector('#pyCode');
-    const output = win.querySelector('#pyOutput');
-    const status = win.querySelector('#pyStatus');
-    if(!runBtn) return;
-
-    runBtn.addEventListener('click', async ()=>{
-      runBtn.disabled = true;
-      status.textContent = pyodideInstance ? 'Running…' : 'Loading Python runtime (first run only)…';
-      output.textContent = '';
-      try{
-        const py = await loadPyodideOnce();
-        status.textContent = 'Running…';
-        py.setStdout({ batched: (s)=>{ output.textContent += s + '\n'; } });
-        py.setStderr({ batched: (s)=>{ output.textContent += s + '\n'; } });
-        await py.runPythonAsync(codeBox.value);
-        status.textContent = 'Done ✓';
-      } catch(err){
-        output.textContent += '\n' + err;
-        status.textContent = 'Error';
-      } finally {
-        runBtn.disabled = false;
-      }
-    });
-  }
-
-  // ---- Live animated "neural network" canvas background for AI Automations ----
-  function setupAIBackground(win, key){
-    const body = win.querySelector('.winbody');
-    const canvas = document.createElement('canvas');
-    canvas.className = 'ai-canvas';
-    body.insertBefore(canvas, body.firstChild);
-    const ctx = canvas.getContext('2d');
-
-    function size(){
-      canvas.width = body.clientWidth;
-      canvas.height = body.clientHeight;
-    }
-    size();
-
-    const N = 34;
-    const pts = Array.from({length:N}, ()=>({
-      x: Math.random()*canvas.width,
-      y: Math.random()*canvas.height,
-      vx: (Math.random()-0.5)*0.35,
-      vy: (Math.random()-0.5)*0.35
-    }));
-
-    function frame(){
-      ctx.fillStyle = 'rgba(11,16,32,0.35)';
-      ctx.fillRect(0,0,canvas.width,canvas.height);
-      pts.forEach(p=>{
-        p.x += p.vx; p.y += p.vy;
-        if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-      });
-      for(let i=0;i<N;i++){
-        for(let j=i+1;j<N;j++){
-          const dx = pts[i].x-pts[j].x, dy = pts[i].y-pts[j].y;
-          const d = Math.sqrt(dx*dx+dy*dy);
-          if(d < 120){
-            ctx.strokeStyle = 'rgba(91,232,201,' + (0.18*(1-d/120)) + ')';
-            ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.stroke();
-          }
-        }
-      }
-      pts.forEach(p=>{
-        ctx.fillStyle = 'rgba(139,233,253,0.85)';
-        ctx.beginPath(); ctx.arc(p.x,p.y,2,0,Math.PI*2); ctx.fill();
-      });
-      aiRuntime[key].raf = requestAnimationFrame(frame);
-    }
-
-    const ro = new ResizeObserver(()=> size());
-    ro.observe(body);
-    aiRuntime[key] = { raf:null, ro };
-    frame();
-  }
+  });
 </script>
 </body>
 </html>
