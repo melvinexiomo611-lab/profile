@@ -3,22 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Melvin Exiomo — Desktop</title>
+<title>Melvin Exiomo — Desktop Portfolio</title>
 <style>
-  :root{
+  :root {
     --sys-font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     --mono-font: 'SF Mono', Menlo, Consolas, 'Courier New', monospace;
-    --ink:#1d1d1f; --sub:#6e6e73; --paper:#ffffff; --line:#e6e6e6;
-    --bar-top:#ffffff; --bar-bot:#f6f6f6;
+    --ink: #1d1d1f;
+    --sub: #6e6e73;
+    --paper: #ffffff;
+    --line: #e6e6e6;
+    --bar-top: #ffffff;
+    --bar-bot: #f6f6f6;
   }
-  *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
-  html,body{
-    margin:0; padding:0; height:100%; overflow:hidden;
-    font-family:var(--sys-font); user-select:none; color:var(--ink);
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0; padding: 0; height: 100%; overflow: hidden;
+    font-family: var(--sys-font); user-select: none; color: var(--ink);
   }
-  /* Aesthetic Desktop Wallpaper */
-  body{
-    height:100vh; position:relative;
+  
+  /* Desktop Wallpaper */
+  body {
+    height: 100vh; position: relative;
     background:
       radial-gradient(circle at 18% 15%, rgba(255,171,171,0.55), transparent 42%),
       radial-gradient(circle at 82% 10%, rgba(178,153,224,0.6), transparent 45%),
@@ -28,115 +33,175 @@
   }
 
   /* ===================== BOOT / LOADING SCREEN ===================== */
-  #boot{
-    position:fixed; inset:0; z-index:99999;
+  #boot {
+    position: fixed; inset: 0; z-index: 99999;
     background: radial-gradient(circle at 50% 35%, #140d2b 0%, #05040a 70%);
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    gap:14px; transition:opacity .6s ease, visibility .6s ease;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px; transition: opacity .6s ease, visibility .6s ease;
   }
-  #boot.hide{ opacity:0; visibility:hidden; pointer-events:none; }
-  .boot-mark{
-    width:56px; height:56px; border-radius:16px;
-    background:linear-gradient(135deg,#9b8cff,#5b6df0);
-    box-shadow:0 0 40px rgba(120,120,255,0.55);
-    animation:boot-pulse 1.6s ease-in-out infinite;
+  #boot.hide { opacity: 0; visibility: hidden; pointer-events: none; }
+  .boot-mark {
+    width: 56px; height: 56px; border-radius: 16px;
+    background: linear-gradient(135deg, #9b8cff, #5b6df0);
+    box-shadow: 0 0 40px rgba(120,120,255,0.55);
+    animation: boot-pulse 1.6s ease-in-out infinite;
   }
-  @keyframes boot-pulse{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.08); } }
-  .boot-title{ color:#fff; font-size:22px; font-weight:700; letter-spacing:0.14em; margin-top:6px; }
-  .boot-sub{
-    color:#00ffcc; font-size:14px; font-weight:600; font-family:var(--mono-font); letter-spacing:0.01em; text-align:center; padding:0 20px;
+  @keyframes boot-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+  .boot-title { color: #fff; font-size: 22px; font-weight: 700; letter-spacing: 0.14em; margin-top: 6px; }
+  .boot-sub {
+    color: #00ffcc; font-size: 14px; font-weight: 600; font-family: var(--mono-font);
+    letter-spacing: 0.01em; text-align: center; padding: 0 20px;
     animation: blink-text 1.5s infinite;
   }
-  @keyframes blink-text { 0%, 100% {opacity: 1;} 50% {opacity: 0.5;} }
-  .boot-bar{ width:220px; height:5px; border-radius:4px; background:rgba(255,255,255,0.12); overflow:hidden; margin-top:6px; }
-  .boot-bar-fill{
-    height:100%; width:0%; border-radius:4px;
-    background:linear-gradient(90deg,#9b8cff,#5b6df0,#00ffcc);
-    animation:boot-fill 5s linear forwards;
+  @keyframes blink-text { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+  .boot-bar { width: 220px; height: 5px; border-radius: 4px; background: rgba(255,255,255,0.12); overflow: hidden; margin-top: 6px; }
+  .boot-bar-fill {
+    height: 100%; width: 0%; border-radius: 4px;
+    background: linear-gradient(90deg, #9b8cff, #5b6df0, #00ffcc);
+    animation: boot-fill 5s linear forwards;
   }
-  @keyframes boot-fill{ from{ width:0%; } to{ width:100%; } }
+  @keyframes boot-fill { from { width: 0%; } to { width: 100%; } }
+
+  /* ===================== DESKTOP AMBIENT BRANDING ===================== */
+  #desktop-brand {
+    position: absolute;
+    top: 42%; left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    pointer-events: none;
+    z-index: 1;
+    user-select: none;
+    max-width: 700px;
+    padding: 0 24px;
+    animation: fadeInDesktop 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes fadeInDesktop {
+    0% { opacity: 0; transform: translate(-50%, -46%) scale(0.96); }
+    100% { opacity: 0.95; transform: translate(-50%, -50%) scale(1); }
+  }
+  #desktop-brand h1 {
+    font-size: clamp(32px, 5.5vw, 56px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    margin: 0 0 10px 0;
+    color: #ffffff;
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+    background: linear-gradient(180deg, #ffffff 40%, rgba(255, 255, 255, 0.65) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  #desktop-brand p {
+    font-size: clamp(14px, 1.8vw, 17px);
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+    margin: 0 auto;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+  }
+  #desktop-brand .hint-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 20px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    font-size: 13px;
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+  #desktop-brand .hint-pill code {
+    font-family: var(--mono-font);
+    background: rgba(0, 0, 0, 0.25);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #00ffcc;
+  }
 
   /* ===================== Top Menu bar ===================== */
-  #menubar{
-    position:fixed; top:0; left:0; right:0; height:28px;
-    background:rgba(255,255,255,0.45); backdrop-filter:blur(25px) saturate(2);
-    -webkit-backdrop-filter:blur(25px) saturate(2);
-    border-bottom:1px solid rgba(255,255,255,0.2); box-shadow: 0 1px 10px rgba(0,0,0,0.05);
-    display:flex; align-items:center; z-index:5000;
-    padding:0 16px; font-size:13px; gap:16px; font-weight:500;
+  #menubar {
+    position: fixed; top: 0; left: 0; right: 0; height: 28px;
+    background: rgba(255,255,255,0.45); backdrop-filter: blur(25px) saturate(2);
+    -webkit-backdrop-filter: blur(25px) saturate(2);
+    border-bottom: 1px solid rgba(255,255,255,0.2); box-shadow: 0 1px 10px rgba(0,0,0,0.05);
+    display: flex; align-items: center; z-index: 5000;
+    padding: 0 16px; font-size: 13px; gap: 16px; font-weight: 500;
   }
-  #menubar .mark{
-    width:16px; height:16px; border-radius:4px; flex-shrink:0;
-    background: linear-gradient(135deg,#9b8cff,#5b6df0); box-shadow: 0 0 8px rgba(155,140,255,0.6);
+  #menubar .mark {
+    width: 16px; height: 16px; border-radius: 4px; flex-shrink: 0;
+    background: linear-gradient(135deg, #9b8cff, #5b6df0); box-shadow: 0 0 8px rgba(155,140,255,0.6);
   }
-  #activeAppName{ font-weight:700; font-size:13px; margin-right:2px; letter-spacing: 0.02em; }
-  .menu-item{ position:relative; padding:4px 8px; cursor:default; border-radius:6px; color:var(--ink); transition: background 0.1s; }
-  .menu-item:hover, .menu-item.open{ background:rgba(0,0,0,0.08); }
-  .menu-dropdown{
-    display:none; position:absolute; top:100%; left:0; margin-top:6px;
-    background:rgba(250,250,250,0.85); backdrop-filter:blur(25px) saturate(2);
-    border:1px solid rgba(255,255,255,0.4); border-radius:10px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.15); min-width:190px; z-index:6000; padding:6px;
+  #activeAppName { font-weight: 700; font-size: 13px; margin-right: 2px; letter-spacing: 0.02em; }
+  .menu-item { position: relative; padding: 4px 8px; cursor: default; border-radius: 6px; color: var(--ink); transition: background 0.1s; }
+  .menu-item:hover, .menu-item.open { background: rgba(0,0,0,0.08); }
+  .menu-dropdown {
+    display: none; position: absolute; top: 100%; left: 0; margin-top: 6px;
+    background: rgba(250,250,250,0.85); backdrop-filter: blur(25px) saturate(2);
+    border: 1px solid rgba(255,255,255,0.4); border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15); min-width: 190px; z-index: 6000; padding: 6px;
   }
-  .menu-item.open .menu-dropdown{ display:block; }
-  .menu-dropdown div{ padding:6px 12px; font-size:13px; color:var(--ink); white-space:nowrap; border-radius:6px; font-weight:500;}
-  .menu-dropdown div:hover{ background:#5b6df0; color:#fff; }
-  #clock{ margin-left:auto; font-size:13px; padding:4px 6px; font-weight:600; letter-spacing: 0.03em;}
+  .menu-item.open .menu-dropdown { display: block; }
+  .menu-dropdown div { padding: 6px 12px; font-size: 13px; color: var(--ink); white-space: nowrap; border-radius: 6px; font-weight: 500; }
+  .menu-dropdown div:hover { background: #5b6df0; color: #fff; }
+  #clock { margin-left: auto; font-size: 13px; padding: 4px 6px; font-weight: 600; letter-spacing: 0.03em; }
 
   /* ===================== Aesthetic Windows ===================== */
-  .window{
-    position:absolute; background:rgba(255,255,255,0.95); border:1px solid rgba(255,255,255,0.3);
-    border-radius:16px; overflow:hidden;
-    box-shadow:0 25px 60px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.7);
-    min-width:320px; display:flex; flex-direction:column; z-index:100;
+  .window {
+    position: absolute; background: rgba(255,255,255,0.95); border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 16px; overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.7);
+    min-width: 320px; display: flex; flex-direction: column; z-index: 100;
     backdrop-filter: blur(20px);
     animation: pop-in .2s cubic-bezier(0.25, 1, 0.5, 1);
   }
-  @keyframes pop-in{ from{ transform:scale(0.9); opacity:0;} to{ transform:scale(1); opacity:1;} }
+  @keyframes pop-in { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-  .titlebar{
-    height:44px; display:flex; align-items:center; padding:0 16px; gap:10px; cursor:grab; position:relative;
-    background:rgba(255,255,255,0.6); border-bottom:1px solid rgba(0,0,0,0.05); flex-shrink:0; backdrop-filter:blur(10px);
+  .titlebar {
+    height: 44px; display: flex; align-items: center; padding: 0 16px; gap: 10px; cursor: grab; position: relative;
+    background: rgba(255,255,255,0.6); border-bottom: 1px solid rgba(0,0,0,0.05); flex-shrink: 0; backdrop-filter: blur(10px);
   }
-  .titlebar:active{ cursor:grabbing; }
-  .traffic{ display:flex; gap:8px; flex-shrink:0; z-index:2; }
-  .traffic span{
-    width:13px; height:13px; border-radius:50%; display:flex; align-items:center; justify-content:center;
-    cursor:pointer; font-size:9px; color:transparent; line-height:1; font-weight:700; transition: all 0.15s ease;
+  .titlebar:active { cursor: grabbing; }
+  .traffic { display: flex; gap: 8px; flex-shrink: 0; z-index: 2; }
+  .traffic span {
+    width: 13px; height: 13px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 9px; color: transparent; line-height: 1; font-weight: 700; transition: all 0.15s ease;
     box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1);
   }
-  .titlebar:hover .traffic span{ color:rgba(0,0,0,0.5); }
-  .tf-close{ background:#ff5f57; } .tf-min{ background:#febc2e; } .tf-zoom{ background:#28c840; }
-  .tf-close:hover{ filter:brightness(0.9); } .tf-min:hover{ filter:brightness(0.9); } .tf-zoom:hover{ filter:brightness(0.9); }
+  .titlebar:hover .traffic span { color: rgba(0,0,0,0.5); }
+  .tf-close { background: #ff5f57; } .tf-min { background: #febc2e; } .tf-zoom { background: #28c840; }
+  .tf-close:hover { filter: brightness(0.9); } .tf-min:hover { filter: brightness(0.9); } .tf-zoom:hover { filter: brightness(0.9); }
   
-  .titletext{
-    font-size:13.5px; font-weight:600; color:#333; flex:1; text-align:center; 
-    white-space:nowrap; overflow:hidden; text-overflow:ellipsis; position:absolute; left:0; right:0; pointer-events:none;
+  .titletext {
+    font-size: 13.5px; font-weight: 600; color: #333; flex: 1; text-align: center; 
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; position: absolute; left: 0; right: 0; pointer-events: none;
   }
 
-  .toolbar{
-    height:36px; background:rgba(250,250,250,0.7); border-bottom:1px solid rgba(0,0,0,0.05);
-    display:flex; align-items:center; gap:8px; padding:0 16px; flex-shrink:0; font-size:12px; color:var(--sub); font-weight:500;
+  .toolbar {
+    height: 36px; background: rgba(250,250,250,0.7); border-bottom: 1px solid rgba(0,0,0,0.05);
+    display: flex; align-items: center; gap: 8px; padding: 0 16px; flex-shrink: 0; font-size: 12px; color: var(--sub); font-weight: 500;
   }
 
-  .winbody{
-    padding:24px; overflow:auto; font-size:14px; line-height:1.6; color:var(--ink); flex:1;
-    position:relative; max-height: 550px;
+  .winbody {
+    padding: 24px; overflow: auto; font-size: 14px; line-height: 1.6; color: var(--ink); flex: 1;
+    position: relative; max-height: 550px;
   }
   
-  .resize{
-    position:absolute; width:18px; height:18px; right:4px; bottom:4px; cursor:nwse-resize;
+  .resize {
+    position: absolute; width: 18px; height: 18px; right: 4px; bottom: 4px; cursor: nwse-resize;
     background: radial-gradient(circle, rgba(0,0,0,0.2) 1px, transparent 1px) 0 0 / 4px 4px;
-    opacity:0.3; z-index:5; transition: opacity 0.2s;
+    opacity: 0.3; z-index: 5; transition: opacity 0.2s;
   }
-  .resize:hover{ opacity:0.8; }
+  .resize:hover { opacity: 0.8; }
 
-  /* ===================== THEME: Codes (Hacker/Pro Aesthetic) ===================== */
-  .theme-codes{ background:rgba(15,15,18,0.95); border:1px solid rgba(255,255,255,0.05); }
-  .theme-codes .titlebar{ background:rgba(25,25,30,0.8); border-color:#000; }
-  .theme-codes .titletext{ color:#999; font-family:var(--mono-font); font-size:12px;}
-  .theme-codes .toolbar{ background:rgba(20,20,25,0.9); color:#55ff55; border-color:#000; }
-  .theme-codes .winbody{ background:transparent; color:#00ffcc; font-family:var(--mono-font); }
+  /* ===================== THEME: Codes ===================== */
+  .theme-codes { background: rgba(15,15,18,0.95); border: 1px solid rgba(255,255,255,0.05); }
+  .theme-codes .titlebar { background: rgba(25,25,30,0.8); border-color: #000; }
+  .theme-codes .titletext { color: #999; font-family: var(--mono-font); font-size: 12px; }
+  .theme-codes .toolbar { background: rgba(20,20,25,0.9); color: #55ff55; border-color: #000; }
+  .theme-codes .winbody { background: transparent; color: #00ffcc; font-family: var(--mono-font); }
   
   .theme-codes .winbody h2 {
     color: #55ff55; font-family: var(--mono-font); text-shadow: 0 0 10px rgba(85,255,85,0.3);
@@ -146,157 +211,180 @@
   @keyframes typing { from { width: 0 } to { width: 100% } }
   @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: #55ff55; } }
   
-  .theme-codes .winbody h2::before{ content:'root@portfolio:~$ '; color:#ff007f; }
-  .theme-codes .winbody > p{ color:#a8a8a8; font-size:13px; }
-  .theme-codes .proj{ background:rgba(25,25,30,0.6); border:1px solid rgba(255,255,255,0.05); border-radius:12px; padding:16px; margin-bottom:12px; transition: transform 0.2s, box-shadow 0.2s; }
-  .theme-codes .proj:hover{ transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.4); border-color:rgba(85,255,85,0.3); }
-  .theme-codes .proj h3{ color:#ffcc00; font-size:15px; margin-top:0; }
-  .theme-codes .proj p{ color:#dcdcdc; font-size:13px; }
-  .theme-codes .tag{ background:rgba(255,255,255,0.08); color:#00ffcc; border-radius:6px; padding:4px 10px; margin-right:6px; display:inline-block; font-size:12px; border: 1px solid rgba(0,255,204,0.2);}
-  .theme-codes a { color:#ff007f !important; text-decoration: none;}
-  .theme-codes a:hover { text-decoration: underline; text-shadow: 0 0 8px rgba(255,0,127,0.5);}
+  .theme-codes .winbody h2::before { content: 'root@portfolio:~$ '; color: #ff007f; }
+  .theme-codes .winbody > p { color: #a8a8a8; font-size: 13px; }
+  .theme-codes .proj {
+    background: rgba(25,25,30,0.6); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px; padding: 16px; margin-bottom: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .theme-codes .proj:hover {
+    transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    border-color: rgba(85,255,85,0.3);
+  }
+  .theme-codes .proj h3 { color: #ffcc00; font-size: 15px; margin-top: 0; }
+  .theme-codes .proj p { color: #dcdcdc; font-size: 13px; }
+  .theme-codes .tag {
+    background: rgba(255,255,255,0.08); color: #00ffcc; border-radius: 6px;
+    padding: 4px 10px; margin-right: 6px; display: inline-block; font-size: 12px;
+    border: 1px solid rgba(0,255,204,0.2);
+  }
+  .theme-codes a { color: #ff007f !important; text-decoration: none; }
+  .theme-codes a:hover { text-decoration: underline; text-shadow: 0 0 8px rgba(255,0,127,0.5); }
 
-  /* ===================== THEME: Graphic Design (Vibrant Aura) ===================== */
+  /* ===================== THEME: Graphic Design ===================== */
   .theme-designs { border: none; }
-  .theme-designs .winbody{
+  .theme-designs .winbody {
     background: linear-gradient(135deg, #ff007a, #7a00ff, #00d4ff, #ffea00, #ff007a);
     background-size: 400% 400%; animation: aestheticShift 8s ease infinite; color: #fff;
   }
   @keyframes aestheticShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-  .theme-designs .titlebar{ background:rgba(0,0,0,0.3); border-color:rgba(255,255,255,0.1); }
-  .theme-designs .titletext{ color:#fff; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
-  .theme-designs .toolbar{ background:rgba(0,0,0,0.2); color:rgba(255,255,255,0.8); border:none; }
-  .theme-designs .winbody h2{ font-size:32px; font-weight:800; text-transform:uppercase; letter-spacing: 0.05em; text-shadow: 0 4px 20px rgba(0,0,0,0.4); }
-  .theme-designs .winbody > p{ color: rgba(255,255,255,0.9); font-weight:600; font-size: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-  .swatch{ 
-    height:120px; border-radius:20px; border:1px solid rgba(255,255,255,0.4); 
-    box-shadow:0 15px 35px rgba(0,0,0,0.2); background:rgba(255,255,255,0.1); 
-    backdrop-filter:blur(15px); -webkit-backdrop-filter:blur(15px); transition: transform 0.3s;
+  .theme-designs .titlebar { background: rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.1); }
+  .theme-designs .titletext { color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+  .theme-designs .toolbar { background: rgba(0,0,0,0.2); color: rgba(255,255,255,0.8); border: none; }
+  .theme-designs .winbody h2 { font-size: 32px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; text-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+  .theme-designs .winbody > p { color: rgba(255,255,255,0.9); font-weight: 600; font-size: 15px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .swatch { 
+    height: 120px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.4); 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2); background: rgba(255,255,255,0.1); 
+    backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); transition: transform 0.3s;
   }
-  .swatch:hover{ transform: scale(1.05) translateY(-5px); }
+  .swatch:hover { transform: scale(1.05) translateY(-5px); }
 
-  /* ===================== THEME: AI Automations (Particle Glass) ===================== */
-  .theme-ai{ background:rgba(3,5,8,0.95); border:1px solid rgba(91,232,201,0.2); }
-  .theme-ai .titlebar{ background:rgba(10,15,25,0.8); border-bottom:1px solid rgba(91,232,201,0.1); }
-  .theme-ai .toolbar{ background:rgba(5,10,15,0.8); color:#5be8c9; border-bottom:1px solid rgba(91,232,201,0.1); }
-  .theme-ai .titletext{ color:#fff; }
-  .theme-ai .winbody{ background:transparent; color:#dff5ec; overflow: hidden; }
-  .theme-ai .winbody h2{ color:#fff; text-shadow:0 0 20px rgba(91,232,201,0.8); font-size: 28px; }
-  .theme-ai .proj{ 
-    background:rgba(255,255,255,0.02); border:1px solid rgba(91,232,201,0.15); 
-    backdrop-filter:blur(12px); border-radius:16px; padding: 20px;
+  /* ===================== THEME: AI Automations ===================== */
+  .theme-ai { background: rgba(3,5,8,0.95); border: 1px solid rgba(91,232,201,0.2); }
+  .theme-ai .titlebar { background: rgba(10,15,25,0.8); border-bottom: 1px solid rgba(91,232,201,0.1); }
+  .theme-ai .toolbar { background: rgba(5,10,15,0.8); color: #5be8c9; border-bottom: 1px solid rgba(91,232,201,0.1); }
+  .theme-ai .titletext { color: #fff; }
+  .theme-ai .winbody { background: transparent; color: #dff5ec; overflow: hidden; }
+  .theme-ai .winbody h2 { color: #fff; text-shadow: 0 0 20px rgba(91,232,201,0.8); font-size: 28px; }
+  .theme-ai .proj { 
+    background: rgba(255,255,255,0.02); border: 1px solid rgba(91,232,201,0.15); 
+    backdrop-filter: blur(12px); border-radius: 16px; padding: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 16px; transition: all 0.3s ease;
   }
-  .theme-ai .proj:hover{ border-color:rgba(91,232,201,0.5); box-shadow: 0 10px 40px rgba(91,232,201,0.1); }
-  .theme-ai .proj h3{ color:#5be8c9; font-size: 16px; margin-top:0;}
-  .theme-ai .tag{ background:rgba(91,232,201,0.1); color:#5be8c9; border-radius: 20px; padding: 4px 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;}
-  .ai-canvas{ position:absolute; inset:0; z-index:0; opacity: 0.7; }
-  .theme-ai .winbody > *:not(.ai-canvas){ position:relative; z-index:1; }
-
-  /* ===================== THEME: Profile (Clean UI) ===================== */
-  .theme-about .winbody{ padding:0; background:#f0f2f5; }
-  .fb-cover{ height:160px; background:url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=600&auto=format&fit=crop') center/cover; }
-  .fb-avatar-row{ display:flex; align-items:flex-end; gap:16px; padding:0 24px; margin-top:-50px; position:relative; }
-  .fb-avatar{
-    width:100px; height:100px; border-radius:50%; border:4px solid #fff;
-    background:linear-gradient(135deg,#2196f3,#3f51b5); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    display:flex; align-items:center; justify-content:center; color:#fff; font-size:36px; font-weight:800; flex-shrink:0;
+  .theme-ai .proj:hover { border-color: rgba(91,232,201,0.5); box-shadow: 0 10px 40px rgba(91,232,201,0.1); }
+  .theme-ai .proj h3 { color: #5be8c9; font-size: 16px; margin-top: 0; }
+  .theme-ai .tag {
+    background: rgba(91,232,201,0.1); color: #5be8c9; border-radius: 20px;
+    padding: 4px 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
   }
-  .fb-name-block{ padding-bottom:12px; }
-  .fb-name-block h2{ margin:0; font-size:26px; font-weight: 800; color:#1c1e21; letter-spacing: -0.02em;}
-  .fb-tagline{ font-size:15px; color:#65676b; margin:4px 0 0 0; font-weight: 500;}
-  .fb-bio{ background:#fff; margin:20px; padding:24px; border-radius:12px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.05);}
-  .fb-bio h3{ font-size:18px; font-weight:700; color:#1c1e21; margin:0 0 12px 0; }
-  .fb-bio p{ color: #444; font-size: 15px; line-height: 1.6;}
+  .ai-canvas { position: absolute; inset: 0; z-index: 0; opacity: 0.7; }
+  .theme-ai .winbody > *:not(.ai-canvas) { position: relative; z-index: 1; }
 
-  /* ===================== THEME: LinkedIn (Authentic App) ===================== */
-  .theme-linkedin .toolbar{ background:#fff; padding:0 16px; height:54px; gap:16px; border-bottom:1px solid #e0e0e0; }
-  .li-search{ flex:1; background:#eef3f8; border-radius:6px; padding:10px 14px; color:#000; font-size:14px; border:none; font-weight: 500;}
-  .theme-linkedin .winbody{ padding:0; background:#f4f2ee; }
-  .li-cover{ height:120px; background:url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop') center/cover; }
-  .li-avatar-row{ padding:0 24px; margin-top:-55px; position:relative; }
-  .li-avatar{
-    width:110px; height:110px; border-radius:50%; border:4px solid #fff;
-    background:#0a66c2; display:flex; align-items:center; justify-content:center; color:#fff; font-size:36px; font-weight:800; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  /* ===================== THEME: Profile ===================== */
+  .theme-about .winbody { padding: 0; background: #f0f2f5; }
+  .fb-cover { height: 160px; background: url('https://images.unsplash.com/photo-1557683316-973673baf926?q=80&w=600&auto=format&fit=crop') center/cover; }
+  .fb-avatar-row { display: flex; align-items: flex-end; gap: 16px; padding: 0 24px; margin-top: -50px; position: relative; }
+  .fb-avatar {
+    width: 100px; height: 100px; border-radius: 50%; border: 4px solid #fff;
+    background: linear-gradient(135deg,#2196f3,#3f51b5); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex; align-items: center; justify-content: center; color: #fff; font-size: 36px; font-weight: 800; flex-shrink: 0;
   }
-  .li-info{ padding:16px 24px 0 24px; }
-  .li-info h2{ margin:0; font-size:24px; font-weight:700; color:#000;}
-  .li-headline{ font-size:15px; color:#000; margin:6px 0; line-height: 1.4;}
-  .li-meta{ font-size:14px; color:#666; margin:0 0 16px 0; }
-  .li-btnrow{ display:flex; gap:12px; padding:0 24px 20px 24px; }
-  .li-btn-primary{ background:#0a66c2; color:#fff; border:none; border-radius:24px; padding:10px 24px; font-size:15px; font-weight:600; cursor:pointer; transition: background 0.2s;}
-  .li-btn-primary:hover{ background:#004182; }
-  .li-btn-outline{ background:#fff; color:#0a66c2; border:1.5px solid #0a66c2; border-radius:24px; padding:9px 24px; font-size:15px; font-weight:600; cursor:pointer; transition: background 0.2s, box-shadow 0.2s;}
-  .li-btn-outline:hover{ background:rgba(10,102,194,0.08); box-shadow: inset 0 0 0 1px #0a66c2;}
-  .li-section{ background:#fff; margin:12px 24px; padding:24px; border-radius:12px; box-shadow: 0 0 0 1px rgba(0,0,0,0.08); }
-  .li-section h3{ font-size:18px; font-weight: 700; margin:0 0 16px 0; color:#000;}
-  .li-section p{ color: #444; font-size: 14px; line-height: 1.6;}
+  .fb-name-block { padding-bottom: 12px; }
+  .fb-name-block h2 { margin: 0; font-size: 26px; font-weight: 800; color: #1c1e21; letter-spacing: -0.02em; }
+  .fb-tagline { font-size: 15px; color: #65676b; margin: 4px 0 0 0; font-weight: 500; }
+  .fb-bio {
+    background: #fff; margin: 20px; padding: 24px; border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04); border: 1px solid rgba(0,0,0,0.05);
+  }
+  .fb-bio h3 { font-size: 18px; font-weight: 700; color: #1c1e21; margin: 0 0 12px 0; }
+  .fb-bio p { color: #444; font-size: 15px; line-height: 1.6; }
 
-  /* ===================== Aesthetic Dock & Bumping Effect ===================== */
-  #dock{
-    position:fixed; left:50%; bottom:16px; transform:translateX(-50%);
-    display:flex; align-items:flex-end; gap:12px;
-    background:rgba(255,255,255,0.25); backdrop-filter:blur(30px) saturate(2);
-    -webkit-backdrop-filter:blur(30px) saturate(2);
-    border:1px solid rgba(255,255,255,0.4);
-    border-radius:24px; padding:12px 18px; z-index:4000;
-    box-shadow:0 10px 40px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.5);
-    /* Removed overflow constraints so labels won't clip */
+  /* ===================== THEME: LinkedIn ===================== */
+  .theme-linkedin .toolbar { background: #fff; padding: 0 16px; height: 54px; gap: 16px; border-bottom: 1px solid #e0e0e0; }
+  .li-search { flex: 1; background: #eef3f8; border-radius: 6px; padding: 10px 14px; color: #000; font-size: 14px; border: none; font-weight: 500; }
+  .theme-linkedin .winbody { padding: 0; background: #f4f2ee; }
+  .li-cover { height: 120px; background: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=600&auto=format&fit=crop') center/cover; }
+  .li-avatar-row { padding: 0 24px; margin-top: -55px; position: relative; }
+  .li-avatar {
+    width: 110px; height: 110px; border-radius: 50%; border: 4px solid #fff;
+    background: #0a66c2; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 36px; font-weight: 800; box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  .li-info { padding: 16px 24px 0 24px; }
+  .li-info h2 { margin: 0; font-size: 24px; font-weight: 700; color: #000; }
+  .li-headline { font-size: 15px; color: #000; margin: 6px 0; line-height: 1.4; }
+  .li-meta { font-size: 14px; color: #666; margin: 0 0 16px 0; }
+  .li-btnrow { display: flex; gap: 12px; padding: 0 24px 20px 24px; }
+  .li-btn-primary {
+    background: #0a66c2; color: #fff; border: none; border-radius: 24px;
+    padding: 10px 24px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s;
+  }
+  .li-btn-primary:hover { background: #004182; }
+  .li-btn-outline {
+    background: #fff; color: #0a66c2; border: 1.5px solid #0a66c2; border-radius: 24px;
+    padding: 9px 24px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s, box-shadow 0.2s;
+  }
+  .li-btn-outline:hover { background: rgba(10,102,194,0.08); box-shadow: inset 0 0 0 1px #0a66c2; }
+  .li-section { background: #fff; margin: 12px 24px; padding: 24px; border-radius: 12px; box-shadow: 0 0 0 1px rgba(0,0,0,0.08); }
+  .li-section h3 { font-size: 18px; font-weight: 700; margin: 0 0 16px 0; color: #000; }
+  .li-section p { color: #444; font-size: 14px; line-height: 1.6; }
+
+  /* ===================== Aesthetic Dock ===================== */
+  #dock {
+    position: fixed; left: 50%; bottom: 16px; transform: translateX(-50%);
+    display: flex; align-items: flex-end; gap: 12px;
+    background: rgba(255,255,255,0.25); backdrop-filter: blur(30px) saturate(2);
+    -webkit-backdrop-filter: blur(30px) saturate(2);
+    border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 24px; padding: 12px 18px; z-index: 4000;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.5);
   }
   
-  .dock-item{
-    width:56px; text-align:center; cursor:pointer; position:relative;
+  .dock-item {
+    width: 56px; text-align: center; cursor: pointer; position: relative;
     transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), margin 0.2s ease;
-    flex-shrink:0;
+    flex-shrink: 0;
   }
   
   .dock-item:hover { 
     transform: translateY(-16px) scale(1.35); 
     z-index: 10; 
-    margin: 0 16px; /* Creates the bump push */
+    margin: 0 16px;
   }
   
-  .icon-square{
-    width:100%; height:56px; border-radius:14px; margin:0 auto;
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:0 8px 18px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.5);
+  .icon-square {
+    width: 100%; height: 56px; border-radius: 14px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.25), inset 0 1px 1px rgba(255,255,255,0.5);
     transition: box-shadow 0.2s;
   }
-  .dock-item:hover .icon-square { box-shadow:0 12px 24px rgba(0,0,0,0.35), inset 0 1px 1px rgba(255,255,255,0.6); }
-  .icon-square svg{ width:55%; height:55%; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+  .dock-item:hover .icon-square { box-shadow: 0 12px 24px rgba(0,0,0,0.35), inset 0 1px 1px rgba(255,255,255,0.6); }
+  .icon-square svg { width: 55%; height: 55%; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
   
-  /* Restored and Fixed Custom Hover Labels */
-  .dock-label{
-    position:absolute; bottom:calc(100% + 15px); left:50%; transform:translateX(-50%) scale(0.9);
-    font-size:12px; font-weight:600; letter-spacing: 0.02em; white-space:nowrap;
-    background:rgba(20, 20, 25, 0.85); color:#fff; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  .dock-label {
+    position: absolute; bottom: calc(100% + 15px); left: 50%; transform: translateX(-50%) scale(0.9);
+    font-size: 12px; font-weight: 600; letter-spacing: 0.02em; white-space: nowrap;
+    background: rgba(20, 20, 25, 0.85); color: #fff; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.15);
-    border-radius:8px; padding:6px 12px; pointer-events:none;
-    box-shadow:0 8px 16px rgba(0,0,0,0.2); margin-bottom:0;
-    opacity:0; visibility:hidden; transition:all .2s cubic-bezier(0.25, 1, 0.5, 1);
+    border-radius: 8px; padding: 6px 12px; pointer-events: none;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); margin-bottom: 0;
+    opacity: 0; visibility: hidden; transition: all .2s cubic-bezier(0.25, 1, 0.5, 1);
   }
-  .dock-item:hover .dock-label{ opacity:1; visibility:visible; transform:translateX(-50%) scale(1); }
+  .dock-item:hover .dock-label { opacity: 1; visibility: visible; transform: translateX(-50%) scale(1); }
   
-  .dock-sep{ width:1px; align-self:stretch; background:rgba(0,0,0,0.15); margin:6px 5px; }
+  .dock-sep { width: 1px; align-self: stretch; background: rgba(0,0,0,0.15); margin: 6px 5px; }
   
-  #trash .icon-square { background:linear-gradient(150deg,#777,#444); }
-  #trash.trash-hover .icon-square{
-    background:linear-gradient(150deg,#ff5252,#b71c1c) !important;
-    transform:scale(1.2); box-shadow: 0 0 25px rgba(255,0,0,0.6);
+  #trash .icon-square { background: linear-gradient(150deg,#777,#444); }
+  #trash.trash-hover .icon-square {
+    background: linear-gradient(150deg,#ff5252,#b71c1c) !important;
+    transform: scale(1.2); box-shadow: 0 0 25px rgba(255,0,0,0.6);
   }
   
-  @media (max-width:560px){
-    .window{ min-width:88vw !important; max-width:92vw; }
-    .dock-item{ width:44px; }
-    .icon-square{ height:44px; border-radius:12px; }
-    .dock-label{ font-size:10px; }
-    #dock{ gap:8px; padding:10px 12px; }
+  @media (max-width: 560px) {
+    .window { min-width: 88vw !important; max-width: 92vw; }
+    .dock-item { width: 44px; }
+    .icon-square { height: 44px; border-radius: 12px; }
+    .dock-label { font-size: 10px; }
+    #dock { gap: 8px; padding: 10px 12px; }
+    #desktop-brand h1 { font-size: 30px; }
   }
 </style>
 </head>
 <body>
 
+<!-- Boot / Loading Screen -->
 <div id="boot">
   <div class="boot-mark"></div>
   <div class="boot-title">LOADING</div>
@@ -304,6 +392,17 @@
   <div class="boot-bar"><div class="boot-bar-fill"></div></div>
 </div>
 
+<!-- Desktop Background Ambient Branding -->
+<div id="desktop-brand">
+  <h1>Melvin Exiomo</h1>
+  <p>Software Engineer · UI/UX Designer · Automation Builder</p>
+  <div class="hint-pill">
+    <span>✨</span>
+    <span>Click any app in the dock below to explore — no <code>sudo</code> password required.</span>
+  </div>
+</div>
+
+<!-- Top Menu Bar -->
 <div id="menubar">
   <div class="mark"></div>
   <div id="activeAppName">Finder</div>
@@ -334,8 +433,8 @@
   <div id="clock">--:--</div>
 </div>
 
+<!-- Dock -->
 <div id="dock">
-  <!-- Removed title="..." so the ugly browser tooltips won't override the aesthetic labels -->
   <div class="dock-item" data-win="codes">
     <div class="dock-label">Codes</div>
     <div class="icon-square" style="background:linear-gradient(150deg,#1e1e1e,#333);">
@@ -368,7 +467,7 @@
   </div>
   <div class="dock-sep"></div>
   <div class="dock-item" id="trash">
-    <div class="dock-label">Trash (Drag to Close)</div>
+    <div class="dock-label">Trash (Drag window here to close)</div>
     <div class="icon-square">
       <svg viewBox="0 0 24 24" fill="none"><path d="M6 7h12l-1 13H7L6 7z" stroke="#fff" stroke-width="2" stroke-linejoin="round"/><path d="M4 7h16M10 7V4h4v3" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
     </div>
@@ -380,13 +479,13 @@
   <h2>Codes</h2>
   <p>> Initializing repository scan...</p>
   <div class="proj">
-    <h3>[+] Task Tracker App</h3>
-    <p>A full-stack app built for terminal users. Features raw socket connections.</p>
+    <h3><a href="https://github.com" target="_blank">[+] Task Tracker App ↗</a></h3>
+    <p>A full-stack app built for terminal users with raw socket synchronization.</p>
     <span class="tag">System.out.React</span>
     <span class="tag">Node.js</span>
   </div>
   <div class="proj">
-    <h3>[+] Security Dashboard</h3>
+    <h3><a href="https://github.com" target="_blank">[+] Security Dashboard ↗</a></h3>
     <p>Visualizing node traffic across multiple proxy servers in real time.</p>
     <span class="tag">Python</span>
     <span class="tag">Pandas</span>
@@ -415,7 +514,7 @@
   </div>
   <div class="proj">
     <h3>Meeting Notes Summarizer</h3>
-    <p>Takes a raw transcript and outputs a clean summary with action items assigned to each person.</p>
+    <p>Takes a raw transcript and outputs clean summaries with action items assigned to each person.</p>
     <span class="tag">n8n Workflow</span>
   </div>
 </template>
@@ -437,15 +536,22 @@
 
 <template id="tpl-linkedin">
   <div class="li-cover"></div>
-  <div class="li-avatar-row"><div class="li-avatar">ME</div></div>
+  <div class="li-avatar-row">
+    <div class="li-avatar">ME</div>
+  </div>
   <div class="li-info">
     <h2>Melvin Exiomo</h2>
     <p class="li-headline">Software Engineer & UI/UX Designer | Building AI Solutions</p>
     <p class="li-meta">Philippines · 500+ connections</p>
   </div>
   <div class="li-btnrow">
-    <button class="li-btn-primary">Connect</button>
-    <button class="li-btn-outline">Message</button>
+    <!-- Replace '#' with your actual URLs -->
+    <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">
+      <button class="li-btn-primary">Connect ↗</button>
+    </a>
+    <a href="mailto:your-email@example.com" style="text-decoration:none;">
+      <button class="li-btn-outline">Message</button>
+    </a>
   </div>
   <div class="li-section">
     <h3>About</h3>
@@ -460,57 +566,91 @@
 
 <script>
   // Loading Screen Timer
-  setTimeout(()=>{ document.getElementById('boot').classList.add('hide'); }, 5000);
+  setTimeout(() => { 
+    document.getElementById('boot').classList.add('hide'); 
+  }, 5000);
 
   // Clock
-  function tick(){
+  function tick() {
     const d = new Date();
-    let h = d.getHours(); const m = d.getMinutes().toString().padStart(2,'0');
+    let h = d.getHours(); 
+    const m = d.getMinutes().toString().padStart(2, '0');
     const ampm = h >= 12 ? 'PM' : 'AM';
     document.getElementById('clock').textContent = (h % 12 || 12) + ':' + m + ' ' + ampm;
   }
-  tick(); setInterval(tick, 15000);
+  tick(); 
+  setInterval(tick, 15000);
 
   // Top Menu Interactions
-  document.querySelectorAll('.menu-item').forEach(item=>{
-    item.addEventListener('click', (e)=>{
+  document.querySelectorAll('.menu-item').forEach(item => {
+    item.addEventListener('click', (e) => {
       const wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.menu-item').forEach(m=>m.classList.remove('open'));
+      document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('open'));
       if(!wasOpen) item.classList.add('open');
       e.stopPropagation();
     });
   });
-  document.addEventListener('click', ()=>{ document.querySelectorAll('.menu-item').forEach(m=>m.classList.remove('open')); });
-  document.querySelectorAll('[data-open]').forEach(el=>{
-    el.addEventListener('click', ()=> openWindow(el.getAttribute('data-open')) );
+  document.addEventListener('click', () => { 
+    document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('open')); 
   });
-  document.getElementById('aboutThis').addEventListener('click', ()=> alert('Aesthetic Desktop Portfolio.\nDrag windows by title, resize from corner, drop to trash to close.'));
-  document.getElementById('closeAll').addEventListener('click', ()=> { Object.keys(openWins).forEach(k=> openWins[k].remove()); });
+  
+  document.querySelectorAll('[data-open]').forEach(el => {
+    el.addEventListener('click', () => openWindow(el.getAttribute('data-open')));
+  });
+  
+  document.getElementById('aboutThis').addEventListener('click', () => {
+    alert('Aesthetic Desktop Portfolio.\nDrag windows by title, resize from corner, drop into trash to close.');
+  });
+  
+  document.getElementById('closeAll').addEventListener('click', () => { 
+    Object.keys(openWins).forEach(k => {
+      openWins[k].remove();
+      delete openWins[k];
+    }); 
+    setActiveApp('Finder');
+  });
 
-  const titles = { codes: 'Codes', designs: 'Graphic Design', ai: 'AI Automations', about: 'Profile', linkedin: 'LinkedIn Profile' };
-  const crumbs = { codes: 'Macintosh HD ▸ Portfolio ▸ Codes', designs: 'Macintosh HD ▸ Portfolio ▸ Graphic Design', ai: 'Macintosh HD ▸ Portfolio ▸ AI Automations' };
+  const titles = { 
+    codes: 'Codes', 
+    designs: 'Graphic Design', 
+    ai: 'AI Automations', 
+    about: 'Profile', 
+    linkedin: 'LinkedIn Profile' 
+  };
+  const crumbs = { 
+    codes: 'Macintosh HD ▸ Portfolio ▸ Codes', 
+    designs: 'Macintosh HD ▸ Portfolio ▸ Graphic Design', 
+    ai: 'Macintosh HD ▸ Portfolio ▸ AI Automations' 
+  };
 
   const openWins = {};
   let zTop = 100;
 
-  function setActiveApp(name){ document.getElementById('activeAppName').textContent = name; }
+  function setActiveApp(name) { 
+    document.getElementById('activeAppName').textContent = name; 
+  }
 
-  function toolbarFor(key){
+  function toolbarFor(key) {
     if(key === 'linkedin') return `<div class="toolbar"><span style="font-size:16px;">⌂ 👥</span><input class="li-search" placeholder="Search"><span style="font-size:16px;">💬 🔔</span></div>`;
     if(key === 'about') return '';
     return `<div class="toolbar"><span class="crumb">${crumbs[key] || titles[key]}</span></div>`;
   }
 
-  function openWindow(key){
-    if(openWins[key]){ bringToFront(openWins[key]); setActiveApp(titles[key]); return; }
-    const tpl = document.getElementById('tpl-'+key);
+  function openWindow(key) {
+    if(openWins[key]) { 
+      bringToFront(openWins[key]); 
+      setActiveApp(titles[key]); 
+      return; 
+    }
+    const tpl = document.getElementById('tpl-' + key);
     if(!tpl) return;
 
     const win = document.createElement('div');
     win.className = 'window theme-' + key;
-    win.style.width = '480px'; win.style.height = '460px'; 
-    win.style.left = (80 + Object.keys(openWins).length*40) + 'px';
-    win.style.top = (60 + Object.keys(openWins).length*30) + 'px';
+    win.style.width = '480px'; 
+    win.style.height = '460px'; 
+    win.style.left = (80 + Object.keys(openWins).length * 40) + 'px';
+    win.style.top = (60 + Object.keys(openWins).length * 30) + 'px';
 
     win.innerHTML = `
       <div class="titlebar">
@@ -527,29 +667,40 @@
     bringToFront(win);
     setActiveApp(titles[key]);
     
-    // AI Background Script (Realistic Particle Web)
-    if(key === 'ai'){
+    // AI Background Script (Realistic Particle Mesh)
+    if(key === 'ai') {
       const cvs = document.createElement('canvas');
       cvs.className = 'ai-canvas';
       win.querySelector('.winbody').prepend(cvs);
       const ctx = cvs.getContext('2d');
-      let pts = Array.from({length: 45}, ()=>({ x:Math.random()*480, y:Math.random()*460, vx:(Math.random()-0.5)*1.5, vy:(Math.random()-0.5)*1.5 }));
+      let pts = Array.from({length: 45}, () => ({ 
+        x: Math.random() * 480, 
+        y: Math.random() * 460, 
+        vx: (Math.random() - 0.5) * 1.5, 
+        vy: (Math.random() - 0.5) * 1.5 
+      }));
       
-      function renderMesh(){
-        if(!win.isConnected) return; // stop if closed
-        cvs.width = win.clientWidth; cvs.height = win.clientHeight;
-        ctx.clearRect(0,0,cvs.width,cvs.height);
+      function renderMesh() {
+        if(!win.isConnected) return; // Clean up when closed
+        cvs.width = win.clientWidth; 
+        cvs.height = win.clientHeight;
+        ctx.clearRect(0, 0, cvs.width, cvs.height);
+        
         pts.forEach(p => {
           p.x += p.vx; p.y += p.vy;
           if(p.x < 0 || p.x > cvs.width) p.vx *= -1;
           if(p.y < 0 || p.y > cvs.height) p.vy *= -1;
         });
-        for(let i=0; i<pts.length; i++){
-          for(let j=i+1; j<pts.length; j++){
-            let d = Math.hypot(pts[i].x-pts[j].x, pts[i].y-pts[j].y);
-            if(d < 90){
-              ctx.beginPath(); ctx.moveTo(pts[i].x, pts[i].y); ctx.lineTo(pts[j].x, pts[j].y);
-              ctx.strokeStyle = `rgba(91, 232, 201, ${0.4 * (1 - d/90)})`; ctx.stroke();
+        
+        for(let i = 0; i < pts.length; i++) {
+          for(let j = i + 1; j < pts.length; j++) {
+            let d = Math.hypot(pts[i].x - pts[j].x, pts[i].y - pts[j].y);
+            if(d < 90) {
+              ctx.beginPath(); 
+              ctx.moveTo(pts[i].x, pts[i].y); 
+              ctx.lineTo(pts[j].x, pts[j].y);
+              ctx.strokeStyle = `rgba(91, 232, 201, ${0.4 * (1 - d / 90)})`; 
+              ctx.stroke();
             }
           }
         }
@@ -558,67 +709,118 @@
       renderMesh();
     }
 
-    // Drag Logic & Drop to Trash
+    // Drag Logic & Trash Detection
     let isDragging = false, ox, oy, sx, sy;
-    win.querySelector('.titlebar').addEventListener('mousedown', (e)=>{
+    win.querySelector('.titlebar').addEventListener('mousedown', (e) => {
       if(e.target.closest('.traffic')) return;
-      isDragging = true; bringToFront(win); setActiveApp(titles[key]);
-      ox = win.offsetLeft; oy = win.offsetTop; sx = e.clientX; sy = e.clientY;
+      isDragging = true; 
+      bringToFront(win); 
+      setActiveApp(titles[key]);
+      ox = win.offsetLeft; oy = win.offsetTop; 
+      sx = e.clientX; sy = e.clientY;
     });
-    window.addEventListener('mousemove', (e)=>{
+    
+    window.addEventListener('mousemove', (e) => {
       if(!isDragging) return;
       win.style.left = Math.max(0, ox + e.clientX - sx) + 'px';
       win.style.top = Math.max(28, oy + e.clientY - sy) + 'px';
       
-      // Hovering Trash
+      // Hovering Trash check
       let tBox = document.getElementById('trash').getBoundingClientRect();
       let wBox = win.getBoundingClientRect();
-      if(!(wBox.right < tBox.left || wBox.left > tBox.right || wBox.bottom < tBox.top || wBox.top > tBox.bottom)){
+      if(!(wBox.right < tBox.left || wBox.left > tBox.right || wBox.bottom < tBox.top || wBox.top > tBox.bottom)) {
         document.getElementById('trash').classList.add('trash-hover');
-      } else { document.getElementById('trash').classList.remove('trash-hover'); }
+      } else { 
+        document.getElementById('trash').classList.remove('trash-hover'); 
+      }
     });
-    window.addEventListener('mouseup', ()=>{
-      if(isDragging && document.getElementById('trash').classList.contains('trash-hover')){
-        win.style.transform = 'scale(0.1)'; win.style.opacity = '0'; win.style.transition = 'all 0.2s';
-        setTimeout(()=>{ win.remove(); delete openWins[key]; }, 200);
+    
+    window.addEventListener('mouseup', () => {
+      if(isDragging && document.getElementById('trash').classList.contains('trash-hover')) {
+        win.style.transform = 'scale(0.1)'; 
+        win.style.opacity = '0'; 
+        win.style.transition = 'all 0.2s';
+        setTimeout(() => { 
+          win.remove(); 
+          delete openWins[key]; 
+        }, 200);
         document.getElementById('trash').classList.remove('trash-hover');
       }
       isDragging = false;
     });
 
-    // Resize logic
+    // Resize Logic
     const handle = win.querySelector('.resize');
-    let resizing=false, rw, rh;
-    handle.addEventListener('mousedown', (e)=>{
-      resizing=true; sx=e.clientX; sy=e.clientY; rw=win.offsetWidth; rh=win.offsetHeight;
-      e.preventDefault(); e.stopPropagation();
+    let resizing = false, rw, rh;
+    handle.addEventListener('mousedown', (e) => {
+      resizing = true; 
+      sx = e.clientX; sy = e.clientY; 
+      rw = win.offsetWidth; rh = win.offsetHeight;
+      e.preventDefault(); 
+      e.stopPropagation();
     });
-    window.addEventListener('mousemove', (e)=>{
+    window.addEventListener('mousemove', (e) => {
       if(!resizing) return;
-      win.style.width = Math.max(300, rw + (e.clientX-sx)) + 'px';
-      win.style.height = Math.max(200, rh + (e.clientY-sy)) + 'px';
+      win.style.width = Math.max(300, rw + (e.clientX - sx)) + 'px';
+      win.style.height = Math.max(200, rh + (e.clientY - sy)) + 'px';
     });
-    window.addEventListener('mouseup', ()=> resizing=false);
+    window.addEventListener('mouseup', () => resizing = false);
 
-    // Traffic light buttons
-    win.querySelector('.tf-close').onclick = (e) => { e.stopPropagation(); win.remove(); delete openWins[key]; setActiveApp('Finder'); };
-    win.querySelector('.tf-min').onclick = (e) => { e.stopPropagation(); win.style.display = 'none'; setActiveApp('Finder'); };
+    // Traffic Light Buttons
+    win.querySelector('.tf-close').onclick = (e) => { 
+      e.stopPropagation(); 
+      win.remove(); 
+      delete openWins[key]; 
+      setActiveApp('Finder'); 
+    };
+    win.querySelector('.tf-min').onclick = (e) => { 
+      e.stopPropagation(); 
+      win.style.display = 'none'; 
+      setActiveApp('Finder'); 
+    };
     win.querySelector('.tf-zoom').onclick = (e) => { 
       e.stopPropagation();
-      if(!win.dataset.max) { win.dataset.prevW = win.style.width; win.dataset.prevH = win.style.height; win.dataset.prevL = win.style.left; win.dataset.prevT = win.style.top; win.style.width = '95vw'; win.style.height = '85vh'; win.style.left = '2.5vw'; win.style.top = '40px'; win.dataset.max = '1'; }
-      else { win.style.width = win.dataset.prevW; win.style.height = win.dataset.prevH; win.style.left = win.dataset.prevL; win.style.top = win.dataset.prevT; win.dataset.max = ''; }
+      if(!win.dataset.max) { 
+        win.dataset.prevW = win.style.width; 
+        win.dataset.prevH = win.style.height; 
+        win.dataset.prevL = win.style.left; 
+        win.dataset.prevT = win.style.top; 
+        win.style.width = '95vw'; 
+        win.style.height = '85vh'; 
+        win.style.left = '2.5vw'; 
+        win.style.top = '40px'; 
+        win.dataset.max = '1'; 
+      } else { 
+        win.style.width = win.dataset.prevW; 
+        win.style.height = win.dataset.prevH; 
+        win.style.left = win.dataset.prevL; 
+        win.style.top = win.dataset.prevT; 
+        win.dataset.max = ''; 
+      }
     };
-    win.addEventListener('mousedown', ()=>{ bringToFront(win); setActiveApp(titles[key]); });
+    
+    win.addEventListener('mousedown', () => { 
+      bringToFront(win); 
+      setActiveApp(titles[key]); 
+    });
   }
 
-  function bringToFront(win){ zTop++; win.style.zIndex = zTop; }
+  function bringToFront(win) { 
+    zTop++; 
+    win.style.zIndex = zTop; 
+  }
   
-  document.querySelectorAll('.dock-item[data-win]').forEach(el=>{
-    el.addEventListener('click', ()=>{
+  // Dock click event
+  document.querySelectorAll('.dock-item[data-win]').forEach(el => {
+    el.addEventListener('click', () => {
       const key = el.getAttribute('data-win');
-      if(openWins[key] && openWins[key].style.display === 'none'){
-        openWins[key].style.display = 'flex'; bringToFront(openWins[key]); setActiveApp(titles[key]);
-      } else { openWindow(key); }
+      if(openWins[key] && openWins[key].style.display === 'none') {
+        openWins[key].style.display = 'flex'; 
+        bringToFront(openWins[key]); 
+        setActiveApp(titles[key]);
+      } else { 
+        openWindow(key); 
+      }
     });
   });
 </script>
