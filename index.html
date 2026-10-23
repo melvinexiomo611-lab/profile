@@ -475,20 +475,27 @@
 </div>
 
 <!-- ================= TEMPLATES ================= -->
+<!-- Incorporating the L2/SRE Portfolio content from Notebook sources -->
 <template id="tpl-codes">
   <h2>Codes</h2>
   <p>> Initializing repository scan...</p>
   <div class="proj">
-    <h3><a href="https://github.com" target="_blank">[+] Task Tracker App ↗</a></h3>
-    <p>A full-stack app built for terminal users with raw socket synchronization.</p>
-    <span class="tag">System.out.React</span>
+    <h3><a href="https://github.com" target="_blank">[+] Incident Escalation Dashboard ↗</a></h3>
+    <p>A tool that tracks recurring L2 tickets, categorizes root causes, and surfaces trends to dev teams.</p>
+    <span class="tag">React</span>
     <span class="tag">Node.js</span>
   </div>
   <div class="proj">
-    <h3><a href="https://github.com" target="_blank">[+] Security Dashboard ↗</a></h3>
-    <p>Visualizing node traffic across multiple proxy servers in real time.</p>
+    <h3><a href="https://github.com" target="_blank">[+] Automated Log Analysis Script ↗</a></h3>
+    <p>Parses Linux/Windows event logs to identify failures and auto-generate diagnostic reports.</p>
     <span class="tag">Python</span>
-    <span class="tag">Pandas</span>
+    <span class="tag">Bash</span>
+  </div>
+  <div class="proj">
+    <h3><a href="https://github.com" target="_blank">[+] System Health Monitor ↗</a></h3>
+    <p>Tracking server uptime and API health endpoints to catch issues before users report them.</p>
+    <span class="tag">Prometheus</span>
+    <span class="tag">Grafana</span>
   </div>
 </template>
 
@@ -507,15 +514,22 @@
   <h2>AI Automations</h2>
   <p>Live neural-mesh processing running locally.</p>
   <div class="proj">
-    <h3>Content Repurposing Pipeline</h3>
-    <p>Turns long-form text into social media clusters automatically.</p>
+    <h3>Automated Ticket Triage Pipeline</h3>
+    <p>Takes incoming support emails/tickets, classifies them by urgency/category, and drafts an initial response.</p>
+    <span class="tag">n8n</span>
     <span class="tag">Python</span>
-    <span class="tag">Claude API</span>
   </div>
   <div class="proj">
-    <h3>Meeting Notes Summarizer</h3>
-    <p>Takes a raw transcript and outputs clean summaries with action items assigned to each person.</p>
-    <span class="tag">n8n Workflow</span>
+    <h3>Auto-Remediation Bot</h3>
+    <p>Script triggered by system alerts that performs initial fix attempts before escalating to a human engineer.</p>
+    <span class="tag">Python</span>
+    <span class="tag">Bash</span>
+  </div>
+   <div class="proj">
+    <h3>Knowledge Base Summarizer</h3>
+    <p>Converts closed incident tickets into structured Knowledge Base (KB) articles for L1 support teams.</p>
+    <span class="tag">LangChain</span>
+    <span class="tag">OpenAI</span>
   </div>
 </template>
 
@@ -541,8 +555,8 @@
   </div>
   <div class="li-info">
     <h2>Melvin Exiomo</h2>
-    <p class="li-headline">Software Engineer & UI/UX Designer | Building AI Solutions</p>
-    <p class="li-meta">Philippines · 500+ connections</p>
+    <p class="li-headline">L2 Systems Support Engineer | Automation & SRE Specialist</p>
+    <p class="li-meta">Remote Worldwide · Open to SRE, DevOps & Automation Roles</p>
   </div>
   <div class="li-btnrow">
     <!-- Replace '#' with your actual URLs -->
@@ -555,11 +569,11 @@
   </div>
   <div class="li-section">
     <h3>About</h3>
-    <p>Passionate about crafting automation tools that save time, alongside engaging interfaces. I build products that are not just functional, but memorable.</p>
+    <p>L2 Technical Support Specialist with expertise in complex incident resolution, root-cause diagnosis, and system configurations. Passionate about reducing ticket resolution times (MTTR) by building custom automations, scripts, and monitoring tools to bridge the gap between IT operations and engineering.</p>
   </div>
   <div class="li-section">
     <h3>Experience</h3>
-    <p style="margin-bottom:4px;"><strong>Automation Developer</strong></p>
+    <p style="margin-bottom:4px;"><strong>L2 Systems Support Engineer</strong></p>
     <p style="margin-top:0; color:#666;">2024 - Present</p>
   </div>
 </template>
@@ -709,7 +723,7 @@
       renderMesh();
     }
 
-    // Drag Logic & Trash Detection
+    // Drag Logic & Trash Detection Fix
     let isDragging = false, ox, oy, sx, sy;
     win.querySelector('.titlebar').addEventListener('mousedown', (e) => {
       if(e.target.closest('.traffic')) return;
@@ -725,10 +739,11 @@
       win.style.left = Math.max(0, ox + e.clientX - sx) + 'px';
       win.style.top = Math.max(28, oy + e.clientY - sy) + 'px';
       
-      // Hovering Trash check
+      // Hovering Trash check - REQUIRED FULL OVERLAP
       let tBox = document.getElementById('trash').getBoundingClientRect();
-      let wBox = win.getBoundingClientRect();
-      if(!(wBox.right < tBox.left || wBox.left > tBox.right || wBox.bottom < tBox.top || wBox.top > tBox.bottom)) {
+      // Use the cursor position for a more accurate drop instead of the whole window bounding box
+      if(e.clientX > tBox.left && e.clientX < tBox.right && 
+         e.clientY > tBox.top && e.clientY < tBox.bottom) {
         document.getElementById('trash').classList.add('trash-hover');
       } else { 
         document.getElementById('trash').classList.remove('trash-hover'); 
